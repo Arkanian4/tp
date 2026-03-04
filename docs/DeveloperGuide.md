@@ -274,13 +274,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* small delivery startup owners (e.g., subscription box services) in Singapore
+* have limited manpower for admin work
+* have limited road experience and are unfamiliar with local routes
+* can type fast and prefer typing over mouse interactions
+* are comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition** (Client2Door):
+
+* organizes customer contact and delivery details in one place
+* provides a CLI-based alternative to GUI spreadsheets
+* enables faster delivery tracking via quick access to client details
+* helps optimize delivery routes by ordering addresses
 
 
 ### User stories
