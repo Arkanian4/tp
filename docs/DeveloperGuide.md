@@ -285,7 +285,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * organizes customer contact and delivery details in one place
 * provides a CLI-based alternative to GUI spreadsheets
 * enables faster delivery tracking via quick access to client details
-* helps optimize delivery routes by ordering addresses
+* helps optimize delivery routes by clustering addresses
 
 
 ### User stories
@@ -294,22 +294,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | small business owner                                       | add a new customers             | keep track of deliveries                                                                       |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* * *`  | driver with limited road experience        | get quick directions to my next location | complete my orders as soon as possible                        |
-| `* * *`  | small business owner                       | import and export customers and order details | avoid retyping existing data                                |
+| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use Client2Door             |
+| `* * *`  | beginner user                              | access a help page of commands (user guide) | know what each command does and how to use them        |
+| `* * *`  | small business owner                       | add a new customer with contact details, address, and subscription status | manage deliveries and customer communication |
+| `* * *`  | small business owner                       | view current subscribers for the month | plan monthly deliveries efficiently                             |
+| `* * *`  | small business owner                       | search customers by name/phone/address keyword | find details quickly during calls or delivery attempts    |
+| `* * *`  | small business owner                       | view a customer's delivery address and details | deliver orders accurately                                     |
+| `* * *`  | driver with limited road experience        | open directions (Google Maps link) to my next location | reach the next stop efficiently                    |
 | `* * *`  | delivery driver                            | mark a delivery as succeeded/failed | handle order updates while on the road                          |
+| `* * *`  | small business owner                       | check off customers who have received their monthly box | track completed deliveries for the month              |
+| `* * *`  | small business owner                       | delete customers with expired subscriptions | keep the customer list relevant each month                      |
 | `* * *`  | new business owner                         | access the app with a password | protect client confidentiality and trust                              |
-| `* * *`  | beginner user                              | access a help page of commands (user guide) | know what each command does and how to use them               |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `* *`    | small business owner                       | group customers staying in the same block/estate/area | complete all deliveries in that area without revisiting |
+| `* *`    | small business owner                       | edit a customer delivery entry quickly | correct mistakes and handle last-minute changes                  |
 | `* *`    | delivery driver                            | log the reason for a failed delivery (e.g., "No answer", "Wrong address") | avoid repeating the same mistakes |
+| `* *`    | small business owner                       | import and export customers and order details | avoid retyping existing data                                |
+| `* *`    | small business owner                       | group customers staying in the same block/estate/area | complete all deliveries in that area without revisiting |
 | `* *`    | small business owner who prefers commands over a graphical interface | generate a route grouped by location using a single command | minimize repeated trips easily |
 | `* *`    | CLI-lover                                  | use keyboard commands as much as possible | reduce time wasted navigating with a mouse                         |
 | `* *`    | small business owner                       | highlight blatantly erroneous entries | reduce administrative workload (data checking)                    |
-| `* *`      | user with many persons in the address book | sort persons by name or address        | locate a person easily                                                 |
+| `* *`    | small business owner                       | hide private customer details | minimize chance of someone else seeing them by accident                |
 | `*`      | long-time user                             | delete specific addresses (subscribers) | keep subscribers viewable while removing non-subscribers        |
 | `*`      | long-time user                             | view a decent-looking UI     | make everyday usage less mundane while keeping information viewable    |
 
