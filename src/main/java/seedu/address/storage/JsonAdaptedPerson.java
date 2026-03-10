@@ -131,7 +131,8 @@ class JsonAdaptedPerson {
         final DeliveryStatus modelDeliveryStatus = new DeliveryStatus(deliveryStatus);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelOrderDescription, modelDeliveryStatus, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelOrderDescription,
+                modelDeliveryStatus, modelTags);
     }
 
 }
