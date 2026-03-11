@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's order description in the address book.
+ * Represents a Person's order description in the Client2Door.
  * Guarantees: immutable; is valid as declared in {@link #isValidOrderDescription(String)}
  */
 public class OrderDescription {

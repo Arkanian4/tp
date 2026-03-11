@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Marks a person as "delivered" using it's displayed index from the address book.
+ * Marks a person as "delivered" using it's displayed index from the Client2Door.
  */
 public class MarkDeliveredCommand extends Command {
 
