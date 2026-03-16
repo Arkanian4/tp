@@ -79,23 +79,10 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getName().orElse(null) + ", phone="
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
                 + editPersonDescriptor.getEmail().orElse(null) + ", address="
-<<<<<<< HEAD
-                + editPersonDescriptor.getBoxes().orElse(null) + ", orderDescription="
-                + editPersonDescriptor.getExpiryDate().orElse(null) + ", expiryDate="
-                + editPersonDescriptor.getOrderDescription().orElse(null) + ", deliveryStatus="
                 + editPersonDescriptor.getAddress().orElse(null) + ", boxes="
-=======
-                + editPersonDescriptor.getAddress().orElse(null) + ", boxes="
-<<<<<<< HEAD
-                + editPersonDescriptor.getBoxes().orElse(null) + ", Remark="
-                + editPersonDescriptor.getExpiryDate().orElse(null) + ", expiryDate="
-                + editPersonDescriptor.getRemark().orElse(null) + ", deliveryStatus="
->>>>>>> da280918 (Refactor order description)
-=======
                 + editPersonDescriptor.getBoxes().orElse(null) + ", remark="
                 + editPersonDescriptor.getRemark().orElse(null) + ", expiryDate="
                 + editPersonDescriptor.getExpiryDate().orElse(null) + ", deliveryStatus="
->>>>>>> 94947bb1 (Fix style)
                 + editPersonDescriptor.getDeliveryStatus().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());

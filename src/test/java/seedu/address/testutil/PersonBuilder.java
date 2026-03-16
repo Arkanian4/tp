@@ -141,15 +141,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return new Person(name, phone, email, address, orderDescription, expiryDate, deliveryStatus, boxes, tags);
-=======
-        return new Person(name, phone, email, address, boxes, Remark, expiryDate, deliveryStatus, tags);
->>>>>>> da280918 (Refactor order description)
-=======
         return new Person(name, phone, email, address, boxes, remark, expiryDate, deliveryStatus, tags);
->>>>>>> 94947bb1 (Fix style)
     }
 
 }

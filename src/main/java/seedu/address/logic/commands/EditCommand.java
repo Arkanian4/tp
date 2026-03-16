@@ -308,7 +308,6 @@ public class EditCommand extends Command {
                     && Objects.equals(boxes, otherEditPersonDescriptor.boxes)
                     && Objects.equals(remark, otherEditPersonDescriptor.remark)
                     && Objects.equals(deliveryStatus, otherEditPersonDescriptor.deliveryStatus)
-                    && Objects.equals(boxes, otherEditPersonDescriptor.boxes)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 

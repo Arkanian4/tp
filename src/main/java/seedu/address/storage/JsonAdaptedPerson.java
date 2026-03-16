@@ -32,12 +32,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-<<<<<<< HEAD
-    private final String orderDescription;
-=======
-    private final List<JsonAdaptedBox> boxes;
     private final String remark;
->>>>>>> da280918 (Refactor order description)
     private final String expiryDate;
     private final String deliveryStatus;
     private final List<JsonAdaptedBox> boxes;
@@ -171,13 +166,8 @@ class JsonAdaptedPerson {
 
         final Set<Box> modelBoxes = new HashSet<>(personBoxes);
         final Set<Tag> modelTags = new HashSet<>(personTags);
-<<<<<<< HEAD
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelOrderDescription, modelExpiryDate,
-                modelDeliveryStatus, modelBoxes, modelTags);
-=======
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBoxes,
                 modelRemark, modelExpiryDate, modelDeliveryStatus, modelTags);
->>>>>>> da280918 (Refactor order description)
     }
 
 }
