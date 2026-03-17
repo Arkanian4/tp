@@ -204,7 +204,6 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-
         Person expectedPerson = new PersonBuilder(AMY)
                 .withRemark(VALID_ORDER_DESCRIPTION_AMY)
                 .withTags()
@@ -213,6 +212,16 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BOX_DESC_BOX1 + ORDER_DESCRIPTION_DESC_AMY + EXPIRY_DATE_DESC_AMY + DELIVERY_STATUS_DESC_AMY,
                 new AddCommand(expectedPerson));
+
+        // zero tags and default remark
+        Person expectedPersonWithDefaultRemark = new PersonBuilder(AMY)
+                .withRemark(Remark.DEFAULT_REMARK)
+                .withTags()
+                .withBoxes(VALID_BOX_BOX1)
+                .build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + BOX_DESC_BOX1 + EXPIRY_DATE_DESC_AMY + DELIVERY_STATUS_DESC_AMY,
+                new AddCommand(expectedPersonWithDefaultRemark));
     }
 
     @Test
@@ -241,12 +250,6 @@ public class AddCommandParserTest {
         assertParseFailure(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB
                         + ORDER_DESCRIPTION_DESC_BOB + EXPIRY_DATE_DESC_BOB,
-                expectedMessage);
-
-        // missing Remark prefix
-        assertParseFailure(parser,
-                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + VALID_ORDER_DESCRIPTION_BOB + EXPIRY_DATE_DESC_BOB,
                 expectedMessage);
 
         // missing expiry date prefix

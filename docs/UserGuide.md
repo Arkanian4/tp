@@ -31,7 +31,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 o/2 muffins ex/2026-12-31 s/pending` : Adds a person with a box, remark, expiry date, and delivery status.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 ex/2026-12-31 s/pending` : Adds a person with a box, default remark, expiry date, and delivery status.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -80,15 +80,15 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX o/REMARK ex/EXPIRY_DATE s/DELIVERY_STATUS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX [o/REMARK] ex/EXPIRY_DATE s/DELIVERY_STATUS [t/TAG]…​`
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags and boxes (including 0 tags, but at least 1 `b/BOX`)
+**Tip:** A person can have any number of tags and boxes (including 0 tags, but at least 1 `b/BOX`). If `o/REMARK` is omitted, the person is created with the default remark `No remark`.
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 o/2 muffins ex/2026-12-31 s/pending`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 ex/2026-12-31 s/pending`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison b/box-1 b/box-2 o/weekly pastry set ex/2026-12-15 s/delivered t/friend t/criminal`
 
 ### Listing all persons : `list`
@@ -226,7 +226,7 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX o/REMARK ex/EXPIRY_DATE s/DELIVERY_STATUS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/box-1 o/2 muffins ex/2026-12-31 s/pending t/friend`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX [o/REMARK] ex/EXPIRY_DATE s/DELIVERY_STATUS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/box-1 ex/2026-12-31 s/pending t/friend`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BOX] [o/REMARK] [ex/EXPIRY_DATE] [s/DELIVERY_STATUS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee o/prefers morning delivery`
