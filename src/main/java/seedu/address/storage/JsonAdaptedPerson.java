@@ -76,7 +76,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         remark = source.getRemark().value;
         expiryDate = source.getExpiryDate().value;
-        deliveryStatus = source.getDeliveryStatus().deliveryStatus;
+        deliveryStatus = source.getDeliveryStatus().toString();
         boxes = source.getBoxes().stream()
                 .map(JsonAdaptedBox::new)
                 .collect(Collectors.toList());
@@ -130,7 +130,7 @@ class JsonAdaptedPerson {
 
         if (expiryDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                                                          ExpiryDate.class.getSimpleName()));
+                    ExpiryDate.class.getSimpleName()));
         }
         if (!ExpiryDate.isValidExpiryDate(expiryDate)) {
             throw new IllegalValueException(ExpiryDate.MESSAGE_CONSTRAINTS);
@@ -150,10 +150,12 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, DeliveryStatus.class.getSimpleName()));
         }
-        if (!DeliveryStatus.isValidDeliveryStatus(deliveryStatus)) {
+        final DeliveryStatus modelDeliveryStatus;
+        try {
+            modelDeliveryStatus = DeliveryStatus.fromString(deliveryStatus);
+        } catch (IllegalArgumentException e) {
             throw new IllegalValueException(DeliveryStatus.MESSAGE_CONSTRAINTS);
         }
-        final DeliveryStatus modelDeliveryStatus = new DeliveryStatus(deliveryStatus);
 
         if (boxes == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Box.class.getSimpleName()));
@@ -169,5 +171,4 @@ class JsonAdaptedPerson {
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBoxes,
                 modelRemark, modelExpiryDate, modelDeliveryStatus, modelTags);
     }
-
 }
