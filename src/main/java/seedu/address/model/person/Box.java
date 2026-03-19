@@ -13,6 +13,7 @@ public class Box {
     public static final String VALIDATION_REGEX = "^[a-z]+-\\d{1}$";
 
     public final String boxName;
+    public final ExpiryDate expiryDate;
 
     /**
      * Constructs a {@code Box}.
@@ -23,6 +24,7 @@ public class Box {
         requireNonNull(boxName);
         checkArgument(isValidBoxName(boxName), MESSAGE_CONSTRAINTS);
         this.boxName = boxName;
+        this.expiryDate = new ExpiryDate("2026-12-31");
     }
 
     public static boolean isValidBoxName(String test) {
