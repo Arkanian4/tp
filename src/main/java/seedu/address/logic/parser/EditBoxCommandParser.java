@@ -1,17 +1,19 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.EditBoxCommand;
-import seedu.address.logic.commands.EditBoxCommand.EditBoxDescriptor;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Box;
-import seedu.address.model.person.Name;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BOX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_BOX;
 
 import java.util.stream.Stream;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import seedu.address.logic.commands.EditBoxCommand;
+import seedu.address.logic.commands.EditBoxCommand.EditBoxDescriptor;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Box;
+import seedu.address.model.person.Name;
 
 public class EditBoxCommandParser implements Parser<EditBoxCommand> {
 

@@ -1,19 +1,33 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.person.*;
-import seedu.address.model.tag.Tag;
-
-import java.util.*;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BOX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_BOX;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Box;
+import seedu.address.model.person.DeliveryStatus;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpiryDate;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 
 public class EditBoxCommand extends Command {
 
@@ -106,31 +120,31 @@ public class EditBoxCommand extends Command {
 
     private static Person createEditedPerson(Person personToEdit, Box boxToReplace, Box editedBox)
             throws CommandException {
-       assert personToEdit != null;
-       assert boxToReplace != null;
-       assert editedBox != null;
+        assert personToEdit != null;
+        assert boxToReplace != null;
+        assert editedBox != null;
 
-       Name updatedName = personToEdit.getName();
-       Phone updatedPhone = personToEdit.getPhone();
-       Email updatedEmail = personToEdit.getEmail();
-       Address updatedAddress = personToEdit.getAddress();
-       Remark updatedRemark = personToEdit.getRemark();
-       DeliveryStatus updatedDeliveryStatus = personToEdit.getDeliveryStatus();
-       ExpiryDate updatedPersonExpiryDate = personToEdit.getExpiryDate();
-       Set<Tag> updatedTags = personToEdit.getTags();
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Address updatedAddress = personToEdit.getAddress();
+        Remark updatedRemark = personToEdit.getRemark();
+        DeliveryStatus updatedDeliveryStatus = personToEdit.getDeliveryStatus();
+        ExpiryDate updatedPersonExpiryDate = personToEdit.getExpiryDate();
+        Set<Tag> updatedTags = personToEdit.getTags();
 
-       Set<Box> updatedBoxes = new HashSet<>(personToEdit.getBoxes());
-       updatedBoxes.remove(boxToReplace);
+        Set<Box> updatedBoxes = new HashSet<>(personToEdit.getBoxes());
+        updatedBoxes.remove(boxToReplace);
 
-       boolean duplicateBoxName = updatedBoxes.stream()
-               .anyMatch(box -> box.boxName.equals(editedBox.boxName));
-       if (duplicateBoxName) {
-           throw new CommandException(MESSAGE_DUPLICATE_BOX);
-       }
+        boolean duplicateBoxName = updatedBoxes.stream()
+                .anyMatch(box -> box.boxName.equals(editedBox.boxName));
+        if (duplicateBoxName) {
+            throw new CommandException(MESSAGE_DUPLICATE_BOX);
+        }
 
-       updatedBoxes.add(editedBox);
-       return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBoxes, updatedRemark,
-               updatedPersonExpiryDate, updatedDeliveryStatus, updatedTags);
+        updatedBoxes.add(editedBox);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBoxes, updatedRemark,
+                updatedPersonExpiryDate, updatedDeliveryStatus, updatedTags);
     }
 
     public static class EditBoxDescriptor {
