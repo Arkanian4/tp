@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Represents a Box in Client2Door
  */
-public class Box {
+public class Box implements Comparable<Box> {
 
     public static final String MESSAGE_CONSTRAINTS = "Box names should follow the format '[type]-[number]', where"
             + "type consists of only lowercase letters and number is a single digit number";
@@ -32,6 +32,17 @@ public class Box {
 
     public static boolean isValidBoxName(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    @Override
+    public int compareTo(Box other) {
+        if (this.expiryDate.compareTo(other.expiryDate) < 0) {
+            return -1;
+        }
+        if (this.expiryDate.compareTo(other.expiryDate) > 0) {
+            return 1;
+        }
+        return this.boxName.compareTo(other.boxName);
     }
 
     @Override
