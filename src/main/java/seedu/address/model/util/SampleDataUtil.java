@@ -38,7 +38,7 @@ public class SampleDataUtil {
                 DeliveryStatus.fromString("pending"),
                 getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04, Singapore 123456" ),
+                new Address("Blk 11 Ang Mo Kio Street 74, #11-04, Singapore 123456"),
                 getBoxSet(new ExpiryDate("2026-12-31"), "box-3"),
                 new Remark("1 vanilla cake"),
                 new ExpiryDate("2026-12-29"),

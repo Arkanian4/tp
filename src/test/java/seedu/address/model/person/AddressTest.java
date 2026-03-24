@@ -14,9 +14,15 @@ public class AddressTest {
     }
 
     @Test
-    public void constructor_invalidAddress_throwsIllegalArgumentException() {
-        String invalidAddress = "";
-        assertThrows(IllegalArgumentException.class, () -> new Address(invalidAddress));
+    public void constructor_blankAddress_throwsIllegalArgumentException() {
+        String blankAddress = "";
+        assertThrows(IllegalArgumentException.class, () -> new Address(blankAddress));
+    }
+
+    @Test
+    public void constructor_noPostalCode_throwsIllegalArgumentException() {
+        String noPostalCodeAddress = "blk 123, Sengkang Street 11, Singapore";
+        assertThrows(IllegalArgumentException.class, () -> new Address(noPostalCodeAddress));
     }
 
     @Test
@@ -27,19 +33,25 @@ public class AddressTest {
         // invalid addresses
         assertFalse(Address.isValidAddress("")); // empty string
         assertFalse(Address.isValidAddress(" ")); // spaces only
+        assertFalse(Address.isValidAddress("sengkang")); // no 6-digit postal code
+        assertFalse(Address.isValidAddress("12345")); // only 5 digits
+        assertFalse(Address.isValidAddress("1234567")); // 7 digits
 
         // valid addresses
-        assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(Address.isValidAddress("-")); // one character
-        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(Address.isValidAddress("123456")); // only postal code
+        assertTrue(Address.isValidAddress("123456 Sengkang")); // postal code first
+        assertTrue(Address.isValidAddress("Sengkang 123456")); // postal code last
+        assertTrue(Address.isValidAddress("Sengkang 123456 Street 11")); // postal code middle
+        assertTrue(Address.isValidAddress("Postal: 123456, Singapore")); // with punctuation
+        assertTrue(Address.isValidAddress("Blk 123 Sengkang Street 11, Singapore 123456")); // long address
     }
 
     @Test
     public void equals() {
-        Address address = new Address("Valid Address");
+        Address address = new Address("Blk 123 Sengkang Street 11, Singapore 123456");
 
         // same values -> returns true
-        assertTrue(address.equals(new Address("Valid Address")));
+        assertTrue(address.equals(new Address("Blk 123 Sengkang Street 11, Singapore 123456")));
 
         // same object -> returns true
         assertTrue(address.equals(address));
@@ -51,6 +63,6 @@ public class AddressTest {
         assertFalse(address.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(address.equals(new Address("Other Valid Address")));
+        assertFalse(address.equals(new Address("011111")));
     }
 }
