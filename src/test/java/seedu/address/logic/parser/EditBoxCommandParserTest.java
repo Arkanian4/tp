@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.BOX_DESC_BOX1;
 import static seedu.address.logic.commands.CommandTestUtil.EXPIRY_DATE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EXPIRY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BOX_BOX2;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.EditBoxCommand;
 import seedu.address.logic.commands.EditBoxCommand.EditBoxDescriptor;
+import seedu.address.model.person.Box;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.testutil.EditBoxDescriptorBuilder;
 
@@ -68,6 +71,18 @@ public class EditBoxCommandParserTest {
         EditBoxCommand expectedCommand = new EditBoxCommand(targetName, targetBoxName, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidNewBoxName_failure() {
+        String userInput = PREAMBLE_WHITESPACE + NAME_DESC_AMY + BOX_DESC_BOX1 + INVALID_NEW_BOX + EXPIRY_DATE_DESC_BOB;
+        assertParseFailure(parser, userInput, Box.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidNewExpiryDate_failure() {
+        String userInput = PREAMBLE_WHITESPACE + NAME_DESC_AMY + BOX_DESC_BOX1 + INVALID_EXPIRY_DATE_DESC;
+        assertParseFailure(parser, userInput, ExpiryDate.MESSAGE_CONSTRAINTS);
     }
 
     @Test
