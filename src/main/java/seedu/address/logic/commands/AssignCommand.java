@@ -1,21 +1,32 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.driver.Driver;
-import seedu.address.model.person.*;
-import seedu.address.model.tag.Tag;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.driver.Driver;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Box;
+import seedu.address.model.person.DeliveryStatus;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpiryDate;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Assigned declared drivers to existing subscribers in the address book.
+ */
 public class AssignCommand extends Command {
 
     public static final String COMMAND_WORD = "assign";
@@ -27,7 +38,7 @@ public class AssignCommand extends Command {
             + ": Assigns drivers to subscriber clusters.\n"
             + "Parameters: n/NAME p/PHONE [n/NAME p/PHONE]...\n"
             + "Example: " + COMMAND_WORD + " n/John Doe p/91234567 n/Jane Tan p/98765432";
-    
+
     private final Driver[] drivers;
 
     /**
@@ -38,7 +49,7 @@ public class AssignCommand extends Command {
 
         for (int i = 0; i < inputDrivers.length; i++) {
             Driver toAdd = inputDrivers[i];
-            if (inputHasDuplicate(toAdd)) {
+            if (inputHasDuplicate(toAdd, i)) {
                 throw new CommandException(MESSAGE_DUPLICATE_DRIVER);
             } else {
                 drivers[i] = toAdd;
@@ -47,9 +58,9 @@ public class AssignCommand extends Command {
         }
     }
 
-    private boolean inputHasDuplicate(Driver toAdd) {
-        for (Driver d : drivers) {
-            if (d.equals(toAdd)) {
+    private boolean inputHasDuplicate(Driver toAdd, int limit) {
+        for (int i = 0; i < limit; i++) {
+            if (drivers[i].equals(toAdd)) {
                 return true;
             }
         }
@@ -62,7 +73,8 @@ public class AssignCommand extends Command {
         requireNonNull(model);
         // TODO: integrate method that returns sorted subscribers
         List<List<Person>> sortedSubscribers = new ArrayList<List<Person>>();
-        
+
+        sortedSubscribers.add(model.getFilteredPersonList()); // For Testing
         if (sortedSubscribers.size() != drivers.length) {
             // Algorithm wrong
             return new CommandResult(MESSAGE_FAIL);
@@ -88,7 +100,7 @@ public class AssignCommand extends Command {
         DeliveryStatus statusCopy = personToAssign.getDeliveryStatus();
         Set<Box> boxesCopy = personToAssign.getBoxes();
         Remark remarkCopy = personToAssign.getRemark();
-        Set<Tag> tagsCopy = personToAssign.getTags();
+        Set<Tag> tagsCopy = new HashSet<>(personToAssign.getTags()); // have modifiable tags
         ExpiryDate expiryCopy = personToAssign.getExpiryDate();
         Tag driverTag = new Tag(assignedDriver.getName() + ":" + assignedDriver.getNumber());
 
