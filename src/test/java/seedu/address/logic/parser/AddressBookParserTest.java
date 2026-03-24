@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditBoxCommand;
+import seedu.address.logic.commands.EditBoxCommand.EditBoxDescriptor;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -24,9 +26,13 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Box;
+import seedu.address.model.person.ExpiryDate;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.testutil.EditBoxDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -62,6 +68,15 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editBox() throws Exception {
+        Box box = new Box("box-2", new ExpiryDate("2026-12-31"));
+        EditBoxDescriptor descriptor = new EditBoxDescriptorBuilder(box).build();
+        EditBoxCommand command = (EditBoxCommand) parser.parseCommand(EditBoxCommand.COMMAND_WORD + " "
+            + " n/Amy Bee b/box-1 nb/box-2 ex/2026-12-31");
+        assertEquals(new EditBoxCommand(new Name("Amy Bee"), "box-1", descriptor), command);
     }
 
     @Test
