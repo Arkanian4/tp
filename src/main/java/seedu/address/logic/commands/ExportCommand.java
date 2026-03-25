@@ -56,7 +56,11 @@ public class ExportCommand extends Command {
 
         try {
             ExportUtil.exportAssignmentsFormatted(
+<<<<<<< Updated upstream
                     DeliveryAssignmentHashMap.getAssignments(),
+=======
+                    DeliveryAssignmentHashMap.getInstance(),
+>>>>>>> Stashed changes
                     filePath
             );
         } catch (IOException e) {

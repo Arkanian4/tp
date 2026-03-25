@@ -4,7 +4,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+<<<<<<< Updated upstream
 import java.util.Map;
+=======
+>>>>>>> Stashed changes
 
 import seedu.address.model.person.Person;
 
@@ -25,18 +28,30 @@ public class ExportUtil {
      * @param filePath the file path to write the output to
      * @throws IOException if file writing fails
      */
+<<<<<<< Updated upstream
     public static void exportAssignmentsFormatted(Map<Driver, List<Person>> assignments, String filePath)
             throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
 
             for (Driver driver : assignments.keySet()) {
+=======
+    public static void exportAssignmentsFormatted(DeliveryAssignmentHashMap assignments, String filePath)
+            throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+
+            for (Driver driver : assignments.getDriversKeySet()) {
+>>>>>>> Stashed changes
                 // Driver header
                 writer.write(driver.getName().toString() + " - " + driver.getPhone().toString());
                 writer.newLine();
                 writer.write("--------------------");
                 writer.newLine();
 
+<<<<<<< Updated upstream
                 List<Person> people = assignments.get(driver);
+=======
+                List<Person> people = assignments.getDeliveryListFor(driver);
+>>>>>>> Stashed changes
                 for (Person p : people) {
                     String line = String.format("%s | %s | %s | %s | Boxes: %d",
                             p.getName(),
