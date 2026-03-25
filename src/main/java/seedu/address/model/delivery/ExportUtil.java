@@ -3,6 +3,7 @@ package seedu.address.model.delivery;
 import java.io.File;
 import java.io.IOException;
 
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -25,11 +26,18 @@ public class ExportUtil {
     public static void exportAssignmentsAsHtml(
             DeliveryAssignmentHashMap assignments, String filePath) throws IOException {
         StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html>\n<html>\n<head>\n")
-                .append("<meta charset=\"UTF-8\">\n")
-                .append("<title>Delivery Assignments</title>\n")
-                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n")
-                .append("</head>\n<body>\n");
+
+        try (var cssStream = ExportCommand.class.getResourceAsStream("/styles/styles.css")) {
+            if (cssStream == null) {
+                throw new IOException("Could not find styles.css in resources/styles/");
+            }
+            String cssContent = new String(cssStream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            html.append("<!DOCTYPE html>\n<html>\n<head>\n")
+                    .append("<meta charset=\"UTF-8\">\n")
+                    .append("<title>Delivery Assignments</title>\n")
+                    .append("<style>\n").append(cssContent).append("\n</style>\n")
+                    .append("</head>\n<body>\n");
+        }
 
         // Iterate through each driver
         for (Driver driver : assignments.getDriversKeySet()) {

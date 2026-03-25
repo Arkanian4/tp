@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -15,6 +16,10 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     @Override
     public ExportCommand parse(String args) throws ParseException {
         String trimmed = args.trim();
-        return new ExportCommand(trimmed);
+        try {
+            return new ExportCommand(trimmed.isEmpty() ? null : trimmed);
+        } catch (CommandException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 }

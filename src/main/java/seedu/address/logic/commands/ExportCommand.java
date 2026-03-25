@@ -41,7 +41,7 @@ public class ExportCommand extends Command {
      *
      * @param filePath the file path to export the delivery assignments to
      */
-    public ExportCommand(String filePath) {
+    public ExportCommand(String filePath) throws CommandException {
         if (filePath == null || filePath.isBlank()) {
             // Ensure the data folder exists
             File dir = new File(DEFAULT_DIR);
@@ -49,6 +49,8 @@ public class ExportCommand extends Command {
                 dir.mkdirs();
             }
             this.filePath = DEFAULT_DIR + File.separator + DEFAULT_FILENAME;
+        } else if (!filePath.toLowerCase().endsWith(".html")) {
+            throw new CommandException("Invalid file type. Please provide a file ending with .html");
         } else {
             this.filePath = filePath;
         }
