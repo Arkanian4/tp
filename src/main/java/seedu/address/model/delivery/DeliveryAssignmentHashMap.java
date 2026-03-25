@@ -1,43 +1,47 @@
 package seedu.address.model.delivery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import seedu.address.model.delivery.exceptions.DriverNotFoundException;
 import seedu.address.model.person.Person;
 
-
 /**
- * Stores and manages delivery assignments between {@code Driver}s and {@code Person}s.
+ * Singleton class that stores and manages delivery assignments between {@code Driver}s
+ * and {@code Person}s.
  *
  * <p>This class maintains a mapping of each {@code Driver} to a list of {@code Person}s
- * assigned to them. It provides methods to assign persons to drivers and to clear all
- * existing assignments.</p>
+ * assigned to them. It provides methods to assign persons to drivers, retrieve delivery
+ * lists, and clear all existing assignments.</p>
  *
- * <p>This class is not meant to be instantiated.</p>
+ * <p>This class follows the Singleton pattern and cannot be instantiated directly.</p>
  */
 public class DeliveryAssignmentHashMap {
 
-    /**
-     * Mapping of drivers to the list of persons assigned to them.
-     */
-    private static Map<Driver, List<Person>> assignments = new HashMap<>();
+    private static DeliveryAssignmentHashMap instance = null;
+    private static Map<Driver, List<Person>> assignments;
 
     /**
-     * Private constructor to prevent instantiation.
+     * Private constructor to prevent external instantiation.
      */
-    private DeliveryAssignmentHashMap() {}
+    private DeliveryAssignmentHashMap() {
+        assignments = new HashMap<>();
+    }
 
     /**
-     * Returns the current mapping of drivers to their assigned persons.
+     * Returns the singleton instance of {@code DeliveryAssignmentHashMap}.
      *
-     * @return a map where each key is a {@code Driver} and the value is a list of
-     *     {@code Person}s assigned to that driver
+     * @return the singleton instance
      */
-    public static Map<Driver, List<Person>> getAssignments() {
-        return assignments;
+    public static DeliveryAssignmentHashMap getInstance() {
+        if (instance == null) {
+            instance = new DeliveryAssignmentHashMap();
+        }
+        return instance;
     }
 
     /**
@@ -50,11 +54,21 @@ public class DeliveryAssignmentHashMap {
      * @param p the {@code Person} to be assigned
      */
     public void assign(Driver d, Person p) {
-        if (!assignments.containsKey(d)) {
-            assignments.put(d, new ArrayList<Person>());
-        }
-        List<Person> subscriberList = assignments.get(d);
-        subscriberList.add(p);
+        assignments.computeIfAbsent(d, k -> new ArrayList<>()).add(p);
+    }
+
+    /**
+     * Returns a set of all {@code Driver}s that currently have delivery assignments.
+     *
+     * <p>The returned set is unmodifiable, so external code cannot add or remove drivers
+     * from the internal assignments map. This method is useful for iterating over all
+     * drivers without exposing the full map.</p>
+     *
+     * @return an unmodifiable {@link Set} of all {@code Driver}s with assignments
+     */
+    public Set<Driver> getDriversKeySet() {
+        // Return an unmodifiable view so external code cannot alter the internal map
+        return Collections.unmodifiableSet(assignments.keySet());
     }
 
     /**
@@ -65,11 +79,12 @@ public class DeliveryAssignmentHashMap {
      *
      * @param d the {@code Driver} whose delivery list is to be retrieved
      * @return a list of {@code Person}s assigned to the driver
-     * @throws DriverNotFoundException if the driver has does not exist in hashmap
+     * @throws DriverNotFoundException if the driver does not exist in the assignments map
      */
     public List<Person> getDeliveryListFor(Driver d) {
-        if (assignments.containsKey(d)) {
-            return assignments.get(d);
+        List<Person> list = assignments.get(d);
+        if (list != null) {
+            return list;
         } else {
             throw new DriverNotFoundException();
         }
