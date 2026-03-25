@@ -1,11 +1,12 @@
 package seedu.address.model.delivery;
 
-import seedu.address.model.person.Person;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import seedu.address.model.person.Person;
+
 
 /**
  * Stores and manages delivery assignments between {@code Driver}s and {@code Person}s.
