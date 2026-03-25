@@ -26,7 +26,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_FAILURE = "Failed to export delivery assignments.";
 
     private static final String DEFAULT_DIR = "data";
-    private static final String DEFAULT_FILENAME = "delivery_assignments.txt";
+    private static final String DEFAULT_FILENAME = "delivery_assignments.html";
 
     private final String filePath;
 
@@ -72,14 +72,11 @@ public class ExportCommand extends Command {
 
         try {
             checkExportable();
+            ExportUtil.exportAssignmentshtml(assignments, filePath);
         } catch (NotExportableException e) {
             throw new CommandException(MESSAGE_FAILURE + " " + e.getMessage());
-        }
-
-        try {
-            ExportUtil.exportAssignmentsFormatted(assignments, filePath);
         } catch (IOException e) {
-            throw new CommandException(MESSAGE_FAILURE + " " + e.getMessage());
+            throw new CommandException("Export failed: " + e.getMessage());
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, filePath));

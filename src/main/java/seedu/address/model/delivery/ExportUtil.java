@@ -1,6 +1,7 @@
 package seedu.address.model.delivery;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -52,5 +53,57 @@ public class ExportUtil {
                 writer.newLine(); // space between drivers
             }
         }
+    }
+
+    /**
+     * Exports delivery assignments to a nicely formatted HTML file.
+     * <p>
+     * Each driver is printed as a heading, followed by their assigned subscribers.
+     * <p>
+     * @param assignments the map of drivers to assigned persons
+     * @param filePath the file path to write the output to
+     * @throws IOException if file writing fails
+     */
+    public static void exportAssignmentshtml(
+            DeliveryAssignmentHashMap assignments, String filePath) throws IOException {
+        StringBuilder html = new StringBuilder();
+        html.append("<!DOCTYPE html>\n<html>\n<head>\n")
+                .append("<meta charset=\"UTF-8\">\n")
+                .append("<title>Delivery Assignments</title>\n")
+                .append("<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n")
+                .append("</head>\n<body>\n");
+
+        // Iterate through each driver
+        for (Driver driver : assignments.getDriversKeySet()) {
+            html.append("<table>\n")
+                    .append("<caption>Driver: ").append(driver.getName().toString())
+                    .append(" | ").append(driver.getPhone().toString()).append("</caption>\n")
+                    .append("<thead>\n<tr>\n")
+                    .append("<th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th>Boxes</th>\n")
+                    .append("</tr>\n</thead>\n<tbody>\n");
+
+            for (Person p : assignments.getDeliveryListFor(driver)) {
+                html.append("<tr>\n")
+                        .append("<td>").append(p.getName().toString()).append("</td>")
+                        .append("<td>").append(p.getPhone().toString()).append("</td>")
+                        .append("<td>").append(p.getEmail().toString()).append("</td>")
+                        .append("<td>").append(p.getAddress().toString()).append("</td>")
+                        .append("<td>").append(p.getBoxes()).append("</td>\n")
+                        .append("</tr>\n");
+            }
+
+            html.append("</tbody>\n</table>\n<br>\n");
+        }
+
+        html.append("</body>\n</html>");
+
+        // Write to file
+        File dir = new File("data");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        File file = new File(filePath);
+        java.nio.file.Files.writeString(file.toPath(), html.toString());
     }
 }
