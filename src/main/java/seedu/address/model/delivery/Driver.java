@@ -1,10 +1,12 @@
-package seedu.address.model.person;
+package seedu.address.model.delivery;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 
 /**
  * Represents a Driver in Client2Door.
