@@ -18,6 +18,10 @@ import seedu.address.model.person.Box;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
+/**
+ * Deletes one or more boxes identified by their box name from a person
+ * identified by their name.
+ */
 public class DeleteBoxCommand extends Command {
 
     public static final String COMMAND_WORD = "deletebox";
@@ -40,6 +44,11 @@ public class DeleteBoxCommand extends Command {
     private final Name targetName;
     private final Set<String> targetBoxNames;
 
+    /**
+     * Creates a DeleteBoxCommand for a given subscriber name and the names of boxes to delete
+     * @param targetName of the person to delete boxes from
+     * @param targetBoxNames of the boxes to delete
+     */
     public DeleteBoxCommand(Name targetName, Set<String> targetBoxNames) {
         requireNonNull(targetName);
         requireNonNull(targetBoxNames);

@@ -13,8 +13,16 @@ import seedu.address.logic.commands.DeleteBoxCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 
+/**
+ * Parses input arguments and creates a new DeleteBoxCommand object
+ */
 public class DeleteBoxCommandParser implements Parser<DeleteBoxCommand> {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteBoxCommand
+     * and returns a DeleteBoxCommand object for execution.
+     * @throws ParseException if the user input does not conform to the expected format
+     */
     public DeleteBoxCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_BOX);
