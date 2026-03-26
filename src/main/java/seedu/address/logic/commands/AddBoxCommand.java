@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
@@ -20,6 +21,9 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Adds one or more boxes to a person in the address book.
+ */
 public class AddBoxCommand extends Command {
 
     public static final String COMMAND_WORD = "addbox";
@@ -34,6 +38,9 @@ public class AddBoxCommand extends Command {
     private final Name subscriberName;
     private final Set<Box> boxesToAdd;
 
+    /**
+     * Creates an AddBoxCommand to add the boxes to a specified subscriber.
+     */
     public AddBoxCommand(Name subscriberName, Set<Box> boxesToAdd) {
         requireNonNull(subscriberName);
         requireNonNull(boxesToAdd);
@@ -90,5 +97,29 @@ public class AddBoxCommand extends Command {
         Set<Box> updatedBoxes = new HashSet<>(personToEdit.getBoxes());
         updatedBoxes.addAll(boxesToAdd);
         return new Person(name, phone, email, address, updatedBoxes, remark, personExpiryDate, deliveryStatus, tags);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles null
+        if (!(other instanceof AddBoxCommand)) {
+            return false;
+        }
+
+        AddBoxCommand otherAddBoxCommand = (AddBoxCommand) other;
+        return subscriberName.equals(otherAddBoxCommand.subscriberName)
+                && boxesToAdd.equals(otherAddBoxCommand.boxesToAdd);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("subscriberName", subscriberName)
+                .add("boxesToAdd", boxesToAdd)
+                .toString();
     }
 }
