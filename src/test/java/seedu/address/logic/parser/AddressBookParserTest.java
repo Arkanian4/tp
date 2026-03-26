@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BOX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddBoxCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteBoxCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditBoxCommand;
 import seedu.address.logic.commands.EditBoxCommand.EditBoxDescriptor;
@@ -70,6 +73,13 @@ public class AddressBookParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_deleteBox() throws Exception {
+        DeleteBoxCommand command = (DeleteBoxCommand) parser.parseCommand(
+                DeleteBoxCommand.COMMAND_WORD + " " + PREFIX_NAME + "Amy Bee " + PREFIX_BOX + "box-1");
+        assertEquals(new DeleteBoxCommand(new Name("Amy Bee"), Set.of("box-1")), command);
     }
 
     @Test
