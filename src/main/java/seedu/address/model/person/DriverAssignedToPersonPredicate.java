@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
-
 import seedu.address.model.delivery.DeliveryAssignmentHashMap;
 
 /**
@@ -22,7 +21,7 @@ public class DriverAssignedToPersonPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(DeliveryAssignmentHashMap.getInstance()
-                .getDriverForPerson(person).getName(), keyword));
+                .getDriverForPerson(person).getName().fullName, keyword));
     }
 
     @Override
