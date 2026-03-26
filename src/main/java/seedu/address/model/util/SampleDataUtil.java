@@ -2,6 +2,7 @@ package seedu.address.model.util;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
@@ -82,7 +83,7 @@ public class SampleDataUtil {
     public static Set<Box> getBoxSet(ExpiryDate expiryDate, String... strings) {
         return Arrays.stream(strings)
                 .map(boxName -> new Box(boxName, expiryDate))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     /**

@@ -8,11 +8,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_BOX;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -148,7 +148,7 @@ public class EditBoxCommand extends Command {
         ExpiryDate personExpiryDate = personToEdit.getExpiryDate();
         Set<Tag> tags = personToEdit.getTags();
 
-        Set<Box> updatedBoxes = new HashSet<>(personToEdit.getBoxes());
+        Set<Box> updatedBoxes = new TreeSet<>(personToEdit.getBoxes());
         updatedBoxes.remove(boxToReplace);
 
         boolean duplicateBoxName = updatedBoxes.stream()
