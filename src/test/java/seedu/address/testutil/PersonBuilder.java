@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import seedu.address.model.person.Address;
@@ -66,7 +67,7 @@ public class PersonBuilder {
         expiryDate = personToCopy.getExpiryDate();
         deliveryStatus = personToCopy.getDeliveryStatus();
         tags = new HashSet<>(personToCopy.getTags());
-        boxes = new HashSet<>(personToCopy.getBoxes());
+        boxes = new TreeSet<>(personToCopy.getBoxes());
     }
 
     /**

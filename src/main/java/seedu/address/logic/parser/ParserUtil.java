@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -213,7 +214,7 @@ public class ParserUtil {
     public static Set<Box> parseBoxes(Collection<String> boxes, ExpiryDate expiryDate) throws ParseException {
         requireNonNull(boxes);
         requireNonNull(expiryDate);
-        final Set<Box> boxSet = new HashSet<>();
+        final Set<Box> boxSet = new TreeSet<>();
         for (String boxName: boxes) {
             boxSet.add(parseBox(boxName, expiryDate));
         }

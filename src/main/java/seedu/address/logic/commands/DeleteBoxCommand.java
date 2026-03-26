@@ -28,6 +28,8 @@ public class DeleteBoxCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes one or more boxes from a subscriber identified by their name.\n"
+            + "Note: Subscribers will automatically be deleted if they no longer have boxes after this command is "
+            + "executed.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_BOX + "BOX_NAME "

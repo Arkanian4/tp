@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 
@@ -158,7 +158,7 @@ public class EditBoxCommandTest {
         DeliveryStatus updatedDeliveryStatus = personToEdit.getDeliveryStatus();
         Set<Tag> updatedTags = personToEdit.getTags();
 
-        Set<Box> updatedBoxes = new HashSet<>();
+        Set<Box> updatedBoxes = new TreeSet<>();
         for (Box box : personToEdit.getBoxes()) {
             if (!box.boxName.equals(oldBoxName)) {
                 updatedBoxes.add(box);

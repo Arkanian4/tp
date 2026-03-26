@@ -79,7 +79,7 @@ public class PersonCard extends UiPart<Region> {
         remark.setText("Remark: " + person.getRemark().value);
         deliveryStatus.setText("Delivery Status: " + person.getDeliveryStatus().deliveryStatus);
         person.getBoxes().stream()
-                .sorted(Comparator.comparing(box -> box.boxName))
+                .sorted()
                 .forEach(box -> boxes.getChildren().add(new BoxCard(box).getRoot()));
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
