@@ -23,6 +23,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.ClusterUtil;
 
 /**
  * Assigned declared drivers to existing subscribers in the address book.
@@ -71,10 +72,10 @@ public class AssignCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         // TODO: Integrate resetting of sorted subscribers (might have previously been sorted)
-        // TODO: integrate method that returns sorted subscribers from clustering algo
-        List<List<Person>> sortedSubscribers = new ArrayList<List<Person>>();
+        List<List<Person>> sortedSubscribers = ClusterUtil.groupIntoClusters(
+                    model.getFilteredPersonList(),
+                    drivers.length);
 
-        sortedSubscribers.add(model.getFilteredPersonList()); // For Testing
         if (sortedSubscribers.size() != drivers.length) {
             // Algorithm wrong
             return new CommandResult(MESSAGE_FAIL);
