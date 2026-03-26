@@ -94,6 +94,20 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 ex/2026-12-31`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison b/box-1 b/box-2 o/weekly pastry set ex/2026-12-15 t/friend t/criminal`
 
+### Adding one or more boxes to a person: `addbox`
+
+Adds one or more boxes to a person in the address book.
+
+Format: `addbox n/NAME b/BOX_NAME [b/BOX_NAME]... ex/EXPIRY_DATE`
+
+* Adds box(es) with the box names listed to the person identified by `NAME`.
+* The expiry date input will be applied to all added boxes on that same command.
+* Accepts one or more box names.
+
+Examples:
+* `addbox n/Amy b/box-1 ex/2026-12-31` adds 1 box-1 with an expiry date of 2026-12-31 to Amy.
+* `addbox n/Amy b/box-1 b/box-2 ex/2026-12-31` adds 2 boxes box-1 and box2, both with an expiry date of 2026-12-31 to Amy.
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
