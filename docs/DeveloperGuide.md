@@ -428,6 +428,59 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
      Use case ends.
 
+---
+
+**Use case: UC04 — Assign drivers to subscribers**
+
+**MSS**
+
+1.  Startup owner requests to assign drivers to subscribers.
+2.  Startup owner enters the assign command with one or more drivers, each with a name and phone number.
+3.  Client2Door validates the command and driver details.
+4.  Client2Door groups the current subscribers into clusters based on the number of declared drivers.
+5.  Client2Door assigns one driver to each subscriber cluster.
+6.  Client2Door displays a success message and updated subscriber list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Startup owner enters an invalid command word (e.g., typo, misspelling).
+
+    * 1a1. Client2Door shows an error message indicating the command is invalid.
+
+      Use case ends.
+
+* 2a. Startup owner enters an invalid command format (e.g., missing or malformed parameters).
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2b. Startup owner enters an invalid driver name.
+
+    * 2b1. Client2Door shows an invalid name error message.
+
+      Use case ends.
+
+* 2c. Startup owner enters an invalid driver phone number (e.g., incorrect number of digits).
+
+    * 2c1. Client2Door shows an invalid phone number error message.
+
+      Use case ends.
+
+* 2d. Startup owner enters duplicate drivers in the same assign command.
+
+    * 2d1. Client2Door shows a duplicate driver error message.
+
+      Use case ends.
+
+* 4a. Client2Door is unable to complete the subscriber clustering or assignment process.
+
+    * 4a1. Client2Door shows a failure message indicating that driver assignment failed.
+
+      Use case ends.
+
 ### Non-Functional Requirements
 
 **Environment Requirements**
