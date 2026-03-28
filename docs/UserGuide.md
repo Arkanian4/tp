@@ -92,8 +92,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [o/REMARK] ex/EXPIRY_DATE b
 **Important Note:** Default delivery status is set to "Pending"
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/box-1 ex/2026-12-31`
-* `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison b/box-1 b/box-2 o/weekly pastry set ex/2026-12-15 t/friend t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 Singapore 012345 b/box-1 ex/2026-12-31`
+* `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison 123456 b/box-1 b/box-2 o/weekly pastry set ex/2026-12-15 t/friend t/criminal`
 
 ### Adding one or more boxes to a person: `addbox`
 
@@ -323,13 +323,16 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX [o/REMARK] ex/EXPIRY_DATE [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/box-1 ex/2026-12-31 s/pending t/friend`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BOX [o/REMARK] ex/EXPIRY_DATE [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123465 b/box-1 ex/2026-12-31 s/pending t/friend`
 **Clear**  | `clear`
 **Delete** | `delete INDEX` or `delete EMAIL`<br> e.g., `delete 3` `delete test@example.com`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BOX] [o/REMARK] [ex/EXPIRY_DATE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee o/prefers morning delivery`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Mark** | `mark INDEX STATUS`<br> e.g., `mark 1 delivered`
 **Remark** | `remark INDEX REMARK`<br> e.g., `remark 2 allergic to peanuts`
-**Assign** | `assign [n/NAME] [p/PHONE_NUMBER] [n/NAME] [p/PHONE_NUMBER]...`<br> e.g., `assign n/John Doe p/91234567 n/Jane Tan p/98765432`
+**Assign** | `assign [n/NAME] [p/PHONE_NUMBER] [n/NAME] [p/PHONE_NUMBER]…`<br> e.g., `assign n/John Doe p/91234567 n/Jane Tan p/98765432`
 **List**   | `list`
+**Add Box**    | `addbox n/NAME b/BOX [b/BOX_NAME]… ex/EXPIRY_DATE` <br> e.g., `addbox n/Amy b/box-1 b/box-2 ex/2026-12-31…​`
+**Edit Box**    | `edit n/NAME b/BOX_NAME [nb/NEW_BOX_NAME] [ex/EXPIRY_DATE]` <br> e.g., `editbox n/Amy b/box-1 nb/box-2 ex/2026-12-31`
+**Delete Box**    | `deletebox n/NAME b/BOX_NAME [b/BOX_NAME]…` <br> e.g., `deletebox n/Amy b/box-1 b/box-2`
 **Help**   | `help`
