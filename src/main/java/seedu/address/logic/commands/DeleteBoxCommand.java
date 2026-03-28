@@ -15,7 +15,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Box;
-import seedu.address.model.person.Name;
+import seedu.address.commons.core.name.Name;
 import seedu.address.model.person.Person;
 
 /**

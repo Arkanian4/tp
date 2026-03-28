@@ -13,7 +13,6 @@ import seedu.address.model.person.Person;
 /**
  * Singleton class that stores and manages delivery assignments between {@code Driver}s
  * and {@code Person}s.
- *
  * <p>This class maintains a mapping of each {@code Driver} to a list of {@code Person}s
  * assigned to them. It provides methods to assign persons to drivers, retrieve delivery
  * lists, and clear all existing assignments.</p>

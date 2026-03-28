@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.NotExportableException;
 import seedu.address.model.Model;
 import seedu.address.model.delivery.DeliveryAssignmentHashMap;
-import seedu.address.model.delivery.ExportUtil;
+import seedu.address.model.util.ExportUtil;
 
 /**
  * Exports the current delivery assignments to a formatted text file.

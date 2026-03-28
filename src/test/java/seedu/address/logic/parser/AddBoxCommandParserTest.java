@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.AddBoxCommand;
 import seedu.address.model.person.Box;
 import seedu.address.model.person.ExpiryDate;
-import seedu.address.model.person.Name;
+import seedu.address.commons.core.name.Name;
 
 public class AddBoxCommandParserTest {
 

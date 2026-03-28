@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import seedu.address.commons.core.name.Name;
+import seedu.address.commons.core.phone.Phone;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
