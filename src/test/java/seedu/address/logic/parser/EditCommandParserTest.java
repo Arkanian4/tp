@@ -51,9 +51,9 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpiryDate;
-import seedu.address.commons.core.name.Name;
-import seedu.address.commons.core.phone.Phone;
 import seedu.address.model.person.Remark;
+import seedu.address.model.commons.name.Name;
+import seedu.address.model.commons.phone.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 

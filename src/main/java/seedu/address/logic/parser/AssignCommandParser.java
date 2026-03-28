@@ -12,8 +12,8 @@ import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.delivery.Driver;
-import seedu.address.commons.core.name.Name;
-import seedu.address.commons.core.phone.Phone;
+import seedu.address.model.commons.name.Name;
+import seedu.address.model.commons.phone.Phone;
 
 /**
  * Parses input arguments and creates a new AssignCommand object.

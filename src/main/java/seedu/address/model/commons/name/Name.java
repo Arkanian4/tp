@@ -1,4 +1,4 @@
-package seedu.address.commons.core.name;
+package seedu.address.model.commons.name;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;

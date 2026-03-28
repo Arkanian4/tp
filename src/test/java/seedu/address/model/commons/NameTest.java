@@ -1,11 +1,12 @@
-package seedu.address.model.person;
+package seedu.address.model.commons;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
-import seedu.address.commons.core.name.Name;
+
+import seedu.address.model.commons.name.Name;
 
 public class NameTest {
 

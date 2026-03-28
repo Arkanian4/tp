@@ -12,7 +12,7 @@ import seedu.address.logic.commands.AddBoxCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Box;
 import seedu.address.model.person.ExpiryDate;
-import seedu.address.commons.core.name.Name;
+import seedu.address.model.commons.name.Name;
 
 /**
  * Parses input arguments and creates a new AddBoxCommand object

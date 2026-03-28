@@ -15,8 +15,8 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Box;
-import seedu.address.commons.core.name.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.commons.name.Name;
 
 /**
  * Deletes one or more boxes identified by their box name from a person
