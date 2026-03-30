@@ -89,7 +89,6 @@ public class AssignCommand extends Command {
             for (Person personInSameCluster : sortedSubscribers.get(i)) {
                 Person assignedPerson = createPersonWithDriver(personInSameCluster, assignedDriver);
                 model.setPerson(personInSameCluster, assignedPerson);
-                // TODO: Update partitioned list in AddressBook store for export/filter command
             }
         }
 
