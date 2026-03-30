@@ -80,14 +80,14 @@ public class PostalCodeTest {
     }
 
     @Test
-    public void getPostalPrefix_returnsFirstTwoDigits() {
+    public void getPostalPrefixFromPostalCode_forPostalCodeStartingWithNonZero_returnsFirstTwoDigits() {
         PostalCode postalCode = new PostalCode("123456");
-        assertEquals(12, postalCode.getPostalPrefix());
+        assertEquals(12, postalCode.getPostalPrefixFromPostalCode());
     }
 
     @Test
-    public void getPostalPrefix_forPostalCodeStartingWithZero_returnsCorrectPrefix() {
+    public void getPostalPrefixFromPostalCode_forPostalCodeStartingWithZero_returnsCorrectPrefixFromPostalCode() {
         PostalCode postalCode = new PostalCode("045678");
-        assertEquals(4, postalCode.getPostalPrefix());
+        assertEquals(4, postalCode.getPostalPrefixFromPostalCode());
     }
 }

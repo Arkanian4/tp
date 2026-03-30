@@ -64,6 +64,13 @@ public class Address {
         return postalCode;
     }
 
+    /**
+     * Returns the postal code prefix of this address.
+     */
+    public int getPostalPrefixFromAddress() {
+        return getPostalCode().getPostalPrefixFromPostalCode();
+    }
+
     @Override
     public String toString() {
         return value;

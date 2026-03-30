@@ -30,8 +30,8 @@ public class ClusterAssigner {
 
         List<Person> sortedList = new ArrayList<>(list);
         sortedList.sort((person1, person2) -> {
-            int prefix1 = person1.getPostalPrefix();
-            int prefix2 = person2.getPostalPrefix();
+            int prefix1 = person1.getAddress().getPostalPrefixFromAddress();
+            int prefix2 = person2.getAddress().getPostalPrefixFromAddress();
             return Integer.compare(prefix1, prefix2); // sort persons by postal prefix ascending
         });
 

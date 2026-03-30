@@ -39,13 +39,13 @@ public class ClusterAssignerTest {
         List<List<Person>> clusters = ClusterAssigner.groupIntoClusters(persons, 1);
         List<Person> groupedPersons = clusters.get(0);
 
-        assertEquals(1, groupedPersons.get(0).getPostalPrefix());
-        assertEquals(11, groupedPersons.get(1).getPostalPrefix());
-        assertEquals(12, groupedPersons.get(2).getPostalPrefix());
-        assertEquals(54, groupedPersons.get(3).getPostalPrefix());
-        assertEquals(64, groupedPersons.get(4).getPostalPrefix());
-        assertEquals(65, groupedPersons.get(5).getPostalPrefix());
-        assertEquals(74, groupedPersons.get(6).getPostalPrefix());
+        assertEquals(1, groupedPersons.get(0).getAddress().getPostalPrefixFromAddress());
+        assertEquals(11, groupedPersons.get(1).getAddress().getPostalPrefixFromAddress());
+        assertEquals(12, groupedPersons.get(2).getAddress().getPostalPrefixFromAddress());
+        assertEquals(54, groupedPersons.get(3).getAddress().getPostalPrefixFromAddress());
+        assertEquals(64, groupedPersons.get(4).getAddress().getPostalPrefixFromAddress());
+        assertEquals(65, groupedPersons.get(5).getAddress().getPostalPrefixFromAddress());
+        assertEquals(74, groupedPersons.get(6).getAddress().getPostalPrefixFromAddress());
 
     }
 

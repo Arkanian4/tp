@@ -66,7 +66,7 @@ public class PostalCode {
     /**
      * Returns the postal code prefix, which is the first 2 digits of the postal code, as an integer.
      */
-    public int getPostalPrefix() {
+    public int getPostalPrefixFromPostalCode() {
         return Integer.parseInt(value.substring(0, 2));
     }
 
