@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.commons.name.Name;
 import seedu.address.model.commons.phone.Phone;
+import seedu.address.model.delivery.Driver;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +32,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final ExpiryDate expiryDate;
     private final Set<Box> boxes = new TreeSet<>();
+    private Driver assignedDriver;
 
     /**
      * * Constructs a {@code Person} with the given details.
@@ -143,6 +145,24 @@ public class Person {
         return otherPerson != null
                 && (otherPerson.getName().equals(getName())
                     || otherPerson.getEmail().equals(getEmail())); // if name or email is same, consider same person
+    }
+
+    /**
+     * Assigns a {@code Driver} to person
+     */
+    public void assignDriver(Driver driver) {
+        this.assignedDriver = driver;
+    }
+
+    /**
+     * Returns assigned {@code Driver} of person
+     */
+    public Driver getAssignedDriver() {
+        return assignedDriver;
+    }
+
+    public boolean hasDriver() {
+        return !Objects.isNull(this.assignedDriver);
     }
 
     /**

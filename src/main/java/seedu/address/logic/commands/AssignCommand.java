@@ -22,7 +22,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
-import seedu.address.model.tag.DriverTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.ClusterUtil;
 
@@ -89,7 +88,6 @@ public class AssignCommand extends Command {
             for (Person personInSameCluster : sortedSubscribers.get(i)) {
                 Person assignedPerson = createPersonWithDriver(personInSameCluster, assignedDriver);
                 model.setPerson(personInSameCluster, assignedPerson);
-                // TODO: Update partitioned list in AddressBook store for export/filter command
             }
         }
 
@@ -98,6 +96,12 @@ public class AssignCommand extends Command {
 
     }
 
+    /**
+     * Creates a copy of the input Person but with a new Driver
+     * @param personToAssign
+     * @param assignedDriver
+     * @return Person with new {@code Driver} assigned
+     */
     private Person createPersonWithDriver(Person personToAssign, Driver assignedDriver) {
         Name nameCopy = personToAssign.getName();
         Phone phoneCopy = personToAssign.getPhone();
@@ -108,29 +112,17 @@ public class AssignCommand extends Command {
         Remark remarkCopy = personToAssign.getRemark();
         Set<Tag> tagsCopy = new HashSet<>(personToAssign.getTags()); // have modifiable tags
         ExpiryDate expiryCopy = personToAssign.getExpiryDate();
-        DriverTag driverTag = new DriverTag(assignedDriver.getName() + ":" + assignedDriver.getPhone());
-
-        // Negate prior assignments
-        removeExistingDriverTag(tagsCopy);
-        // Add driverTag to tags
-        tagsCopy.add(driverTag);
 
         Person assignedPerson = new Person(nameCopy, phoneCopy, emailCopy, addressCopy,
                 boxesCopy, remarkCopy, expiryCopy,
                 statusCopy, tagsCopy);
 
+        assignedPerson.assignDriver(assignedDriver); // Need not remove existing driver as we are creating new instance
+
         // Keep the assignment store in sync with the updated Person instance in the model.
         assignments.assign(assignedDriver, assignedPerson);
 
         return assignedPerson;
-    }
-
-    /**
-     * Finds and removes any {@code DriverTag} in given set of tags
-     * @param tags
-     */
-    private void removeExistingDriverTag(Set<Tag> tags) {
-        tags.removeIf(tag -> tag.tagName.contains("DRIVER: "));
     }
 
     @Override
