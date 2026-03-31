@@ -30,7 +30,6 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final ExpiryDate expiryDate;
     private final Set<Box> boxes = new TreeSet<>();
     private Driver assignedDriver;
 
@@ -47,13 +46,11 @@ public class Person {
      * @param address The person's address.
      * @param boxes The set of boxes associated with the person.
      * @param remark Additional remarks about the person.
-     * @param expiryDate The expiry date associated with the person.
      * @param tags The set of tags associated with the person.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Box> boxes,
-                  Remark remark, ExpiryDate expiryDate, Set<Tag> tags) {
-        this(name, phone, email, address, boxes, remark, expiryDate,
-                DeliveryStatus.PENDING, tags);
+                  Remark remark, Set<Tag> tags) {
+        this(name, phone, email, address, boxes, remark, DeliveryStatus.PENDING, tags);
     }
 
     /**
@@ -68,15 +65,13 @@ public class Person {
      * @param address The person's address.
      * @param boxes The set of boxes associated with the person.
      * @param remark Additional remarks about the person.
-     * @param expiryDate The expiry date associated with the person.
      * @param deliveryStatus The delivery status of the person.
      * @param tags The set of tags associated with the person.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Box> boxes,
-                  Remark remark, ExpiryDate expiryDate,
-                  DeliveryStatus deliveryStatus, Set<Tag> tags) {
+                  Remark remark, DeliveryStatus deliveryStatus, Set<Tag> tags) {
 
-        requireAllNonNull(name, phone, email, address, boxes, remark, expiryDate, deliveryStatus, tags);
+        requireAllNonNull(name, phone, email, address, boxes, remark, deliveryStatus, tags);
 
         this.name = name;
         this.phone = phone;
@@ -84,7 +79,6 @@ public class Person {
         this.address = address;
         this.boxes.addAll(boxes);
         this.remark = remark;
-        this.expiryDate = expiryDate;
         this.deliveryStatus = deliveryStatus;
         this.tags.addAll(tags);
     }
@@ -97,17 +91,14 @@ public class Person {
      * @param address
      * @param boxes
      * @param remark
-     * @param expiryDate
      * @param deliveryStatus
      * @param tags
      * @param driver
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Box> boxes,
-                  Remark remark, ExpiryDate expiryDate,
-                  DeliveryStatus deliveryStatus, Set<Tag> tags,
-                  Driver driver) {
+                  Remark remark, DeliveryStatus deliveryStatus, Set<Tag> tags, Driver driver) {
 
-        requireAllNonNull(name, phone, email, address, boxes, remark, expiryDate, deliveryStatus, tags);
+        requireAllNonNull(name, phone, email, address, boxes, remark, deliveryStatus, tags);
 
         this.name = name;
         this.phone = phone;
@@ -115,7 +106,6 @@ public class Person {
         this.address = address;
         this.boxes.addAll(boxes);
         this.remark = remark;
-        this.expiryDate = expiryDate;
         this.deliveryStatus = deliveryStatus;
         this.tags.addAll(tags);
         this.assignedDriver = driver;
@@ -147,10 +137,6 @@ public class Person {
 
     public Remark getRemark() {
         return remark;
-    }
-
-    public ExpiryDate getExpiryDate() {
-        return expiryDate;
     }
 
     public DeliveryStatus getDeliveryStatus() {
@@ -205,7 +191,6 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && boxes.equals(otherPerson.boxes)
                 && remark.equals(otherPerson.remark)
-                && expiryDate.equals(otherPerson.expiryDate)
                 && deliveryStatus.equals(otherPerson.deliveryStatus)
                 && tags.equals(otherPerson.tags);
     }
@@ -213,7 +198,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, boxes, remark, expiryDate, deliveryStatus, tags);
+        return Objects.hash(name, phone, email, address, boxes, remark, deliveryStatus, tags);
     }
 
     @Override
@@ -225,7 +210,6 @@ public class Person {
                 .add("address", address)
                 .add("boxes", boxes)
                 .add("remark", remark)
-                .add("expiryDate", expiryDate)
                 .add("deliveryStatus", deliveryStatus)
                 .add("tags", tags)
                 .toString();
