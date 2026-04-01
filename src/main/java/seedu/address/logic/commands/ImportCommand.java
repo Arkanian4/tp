@@ -69,47 +69,52 @@ public class ImportCommand extends Command {
 
         for (String[] row : rows) {
             try {
-                Name name = new Name(row[1].trim());
-                Phone phone = new Phone(row[2].trim());
-                Email email = new Email(row[3].trim());
-                Address address = new Address(row[4].trim());
-                ExpiryDate expiryDate = new ExpiryDate(row[6].trim());
-                Box box = new Box(row[5].trim(), expiryDate);
-                Set<Box> boxes = new TreeSet<>();
-                boxes.add(box);
-                String remarkStr = row[7].trim();
-                Remark remark = remarkStr.isEmpty() ? new Remark(Remark.DEFAULT_REMARK) : new Remark(remarkStr);
-                Set<Tag> tags = parseTags(row[8]);
-
-                Person person = new Person(name, phone, email, address, boxes, remark, expiryDate, tags);
+                Person person = buildPerson(row);
 
                 new AddCommand(person).execute(model);
                 addedCount++;
-
             } catch (Exception e) {
-                String rowSummary = String.format("Name: %s | Phone: %s | Email: %s | Address: %s | "
-                                + "Boxes: %s | Expiry: %s | Remark: %s | Tags: %s",
-                        row.length > 1 ? row[1].trim() : "?",
-                        row.length > 2 ? row[2].trim() : "?",
-                        row.length > 3 ? row[3].trim() : "?",
-                        row.length > 4 ? row[4].trim() : "?",
-                        row.length > 5 ? row[5].trim() : "?",
-                        row.length > 6 ? row[6].trim() : "?",
-                        row.length > 7 ? row[7].trim() : "?",
-                        row.length > 8 ? row[8].trim() : "?");
-                failedImports.add(String.format("  - %s\n     Reason: %s\n", rowSummary, e.getMessage()));
+                failedImports.add(formatFailedRow(row, e.getMessage()));
             }
         }
 
+        return new CommandResult(buildResultMessage(addedCount, rows.size(), failedImports));
+    }
+
+    private Person buildPerson(String[] row) {
+        Name name = new Name(row[1]);
+        Phone phone = new Phone(row[2]);
+        Email email = new Email(row[3]);
+        Address address = new Address(row[4]);
+        ExpiryDate expiryDate = new ExpiryDate(row[6]);
+        Box box = new Box(row[5], expiryDate);
+        Set<Box> boxes = new TreeSet<>(Set.of(box));
+        String remarkStr = row[7];
+        Remark remark = remarkStr.isEmpty() ? new Remark(Remark.DEFAULT_REMARK) : new Remark(remarkStr);
+        Set<Tag> tags = parseTags(row[8]);
+        return new Person(name, phone, email, address, boxes, remark, expiryDate, tags);
+    }
+
+    private String formatFailedRow(String[] row, String reason) {
+        String summary = String.format(
+                "  - Name: %s | Phone: %s | Email: %s | Address: %s | "
+                        + "Boxes: %s | Expiry: %s | Remark: %s | Tags: %s\n     Reason: %s\n",
+                row.length > 1 ? row[1] : "?", row.length > 2 ? row[2] : "?",
+                row.length > 3 ? row[3] : "?", row.length > 4 ? row[4] : "?",
+                row.length > 5 ? row[5] : "?", row.length > 6 ? row[6] : "?",
+                row.length > 7 ? row[7] : "?", row.length > 8 ? row[8] : "?",
+                reason);
+        return summary;
+    }
+
+    private String buildResultMessage(int added, int total, List<String> failed) {
         StringBuilder result = new StringBuilder();
-        result.append(String.format(MESSAGE_SUCCESS, addedCount, rows.size()));
-
-        if (!failedImports.isEmpty()) {
-            result.append(String.format("\n\n%d row(s) failed to import:\n", failedImports.size()));
-            failedImports.forEach(msg -> result.append(msg).append("\n"));
+        result.append(String.format(MESSAGE_SUCCESS, added, total));
+        if (!failed.isEmpty()) {
+            result.append(String.format("\n\n%d row(s) failed to import:\n", failed.size()));
+            failed.forEach(msg -> result.append(msg).append("\n"));
         }
-
-        return new CommandResult(result.toString().trim());
+        return result.toString().trim();
     }
 
     private Set<Tag> parseTags(String tagsStr) {

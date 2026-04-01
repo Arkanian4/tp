@@ -28,13 +28,7 @@ public class ImportUtil {
                 }
 
                 String[] row = line.split(",", -1);
-
-                for (int i = 0; i < row.length; i++) {
-                    row[i] = row[i].trim();
-                    if (row[i].startsWith("\"") && row[i].endsWith("\"")) {
-                        row[i] = row[i].substring(1, row[i].length() - 1);
-                    }
-                }
+                stripFields(row);
 
                 if (row.length < 9) {
                     continue; // skip invalid rows
@@ -44,5 +38,14 @@ public class ImportUtil {
         }
 
         return rowsList;
+    }
+
+    private static void stripFields(String[] row) {
+        for (int i = 0; i < row.length; i++) {
+            row[i] = row[i].trim();
+            if (row[i].startsWith("\"") && row[i].endsWith("\"")) {
+                row[i] = row[i].substring(1, row[i].length() - 1);
+            }
+        }
     }
 }
