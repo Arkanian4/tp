@@ -91,19 +91,18 @@ public class ImportCommand extends Command {
         Set<Box> boxes = new TreeSet<>(Set.of(box));
         String remarkStr = row[7];
         Remark remark = remarkStr.isEmpty() ? new Remark(Remark.DEFAULT_REMARK) : new Remark(remarkStr);
-        Set<Tag> tags = parseTags(row[8]);
+        Set<Tag> tags = Set.of();
         return new Person(name, phone, email, address, boxes, remark, expiryDate, tags);
     }
 
     private String formatFailedRow(String[] row, String reason) {
         String summary = String.format(
                 "  - Name: %s | Phone: %s | Email: %s | Address: %s | "
-                        + "Boxes: %s | Expiry: %s | Remark: %s | Tags: %s\n     Reason: %s\n",
+                        + "Boxes: %s | Expiry: %s | Remark: %s\n     Reason: %s\n",
                 row.length > 1 ? row[1] : "?", row.length > 2 ? row[2] : "?",
                 row.length > 3 ? row[3] : "?", row.length > 4 ? row[4] : "?",
                 row.length > 5 ? row[5] : "?", row.length > 6 ? row[6] : "?",
-                row.length > 7 ? row[7] : "?", row.length > 8 ? row[8] : "?",
-                reason);
+                row.length > 7 ? row[7] : "?", reason);
         return summary;
     }
 
@@ -115,16 +114,5 @@ public class ImportCommand extends Command {
             failed.forEach(msg -> result.append(msg).append("\n"));
         }
         return result.toString().trim();
-    }
-
-    private Set<Tag> parseTags(String tagsStr) {
-        Set<Tag> tags = new TreeSet<>();
-        if (tagsStr != null && !tagsStr.isEmpty()) {
-            String[] arr = tagsStr.split(",\\s*");
-            for (String t : arr) {
-                tags.add(new Tag(t.trim()));
-            }
-        }
-        return tags;
     }
 }
