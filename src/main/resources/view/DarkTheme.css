@@ -379,3 +379,14 @@
     -fx-text-fill: white;
     -fx-font-size: 11;
 }
+
+.list-cell .delivery-status-label {
+    -fx-background-color: #ffff00;
+    -fx-background-radius: 8;
+    -fx-border-color: #c97a2b;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 1 8 1 8;
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
