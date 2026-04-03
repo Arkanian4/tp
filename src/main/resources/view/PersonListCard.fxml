@@ -28,6 +28,7 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <VBox spacing="1">
+        <Label fx:id="driver" styleClass="cell_small_label" text="\$driver" />
         <FlowPane fx:id="tags" />
         <FlowPane fx:id="boxes" />
       </VBox>
