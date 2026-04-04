@@ -15,13 +15,13 @@ public class CommandAssistantTest {
 
     @Test
     public void getSuggestion_addCommand_showsAllRequiredFields() {
-        assertEquals(" n/NAME p/PHONE e/EMAIL a/ADDRESS b/BOX ex/EXPIRY_DATE [o/REMARKS] [t/TAG]...",
+        assertEquals(" n/NAME p/PHONE e/EMAIL a/ADDRESS b/BOX_NAME:EXPIRY_DATE [o/REMARKS] [t/TAG]...",
                 commandAssistant.getSuggestion("add"));
     }
 
     @Test
     public void getSuggestion_addCommandWithStartedFields_showsRemainingFields() {
-        assertEquals(" p/PHONE e/EMAIL a/ADDRESS b/BOX ex/EXPIRY_DATE [o/REMARKS] [t/TAG]...",
+        assertEquals(" p/PHONE e/EMAIL a/ADDRESS b/BOX_NAME:EXPIRY_DATE [o/REMARKS] [t/TAG]...",
                 commandAssistant.getSuggestion("add n/John Doe"));
     }
 

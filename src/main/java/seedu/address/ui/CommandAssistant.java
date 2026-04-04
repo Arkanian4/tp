@@ -116,15 +116,14 @@ public class CommandAssistant {
 
     private static String suggestForAdd(String arguments) {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(arguments, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_BOX, PREFIX_REMARKS, PREFIX_EXPIRY_DATE, PREFIX_TAG);
+                PREFIX_ADDRESS, PREFIX_BOX, PREFIX_REMARKS, PREFIX_TAG);
 
         StringBuilder suggestion = new StringBuilder();
         appendMissingPrefix(suggestion, argMultimap, PREFIX_NAME, " n/NAME");
         appendMissingPrefix(suggestion, argMultimap, PREFIX_PHONE, " p/PHONE");
         appendMissingPrefix(suggestion, argMultimap, PREFIX_EMAIL, " e/EMAIL");
         appendMissingPrefix(suggestion, argMultimap, PREFIX_ADDRESS, " a/ADDRESS");
-        appendMissingPrefix(suggestion, argMultimap, PREFIX_BOX, " b/BOX");
-        appendMissingPrefix(suggestion, argMultimap, PREFIX_EXPIRY_DATE, " ex/EXPIRY_DATE");
+        appendMissingPrefix(suggestion, argMultimap, PREFIX_BOX, " b/BOX_NAME:EXPIRY_DATE");
         appendMissingPrefix(suggestion, argMultimap, PREFIX_REMARKS, " [o/REMARKS]");
         suggestion.append(" [t/TAG]...");
         return suggestion.toString();
