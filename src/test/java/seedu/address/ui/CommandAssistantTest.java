@@ -65,7 +65,18 @@ public class CommandAssistantTest {
 
     @Test
     public void getSuggestion_filterCommandWithDriverPrefix_showsRepeatableDriverFields() {
-        assertEquals(" [d/MORE_DRIVERS]...", commandAssistant.getSuggestion("filter d/Alex"));
+        assertEquals(" [d/MORE_DRIVER_NAMES]...", commandAssistant.getSuggestion("filter d/Alex"));
+    }
+
+    @Test
+    public void getSuggestion_filterCommandWithoutArgs_showsBoxOrDriverFormats() {
+        assertEquals(" BOX_NAME [MORE_BOX_NAMES]... or d/DRIVER_NAME [d/MORE_DRIVER_NAMES]...",
+                commandAssistant.getSuggestion("filter"));
+    }
+
+    @Test
+    public void getSuggestion_filterCommandWithBoxKeyword_showsRepeatableBoxFields() {
+        assertEquals(" [MORE_BOX_NAMES]...", commandAssistant.getSuggestion("filter box-1"));
     }
 
     @Test

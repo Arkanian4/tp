@@ -214,14 +214,14 @@ public class CommandAssistant {
 
     private static String suggestForFilter(String arguments) {
         if (arguments.trim().isEmpty()) {
-            return " KEYWORD [MORE_KEYWORDS]... or d/DRIVER [d/MORE_DRIVERS]...";
+            return " BOX_NAME [MORE_BOX_NAMES]... or d/DRIVER_NAME [d/MORE_DRIVER_NAMES]...";
         }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(arguments, PREFIX_DRIVER);
         if (hasPrefix(argMultimap, PREFIX_DRIVER)) {
-            return " [d/MORE_DRIVERS]...";
+            return " [d/MORE_DRIVER_NAMES]...";
         }
-        return "";
+        return " [MORE_BOX_NAMES]...";
     }
 
     private static String suggestForFind(String arguments) {
