@@ -68,7 +68,7 @@ public class ExportUtil {
                     .append("<td>").append(p.getPhone()).append("</td>")
                     .append("<td>").append(p.getEmail()).append("</td>")
                     .append("<td>").append(p.getAddress()).append("</td>")
-                    .append("<td>").append(p.getBoxes()).append("</td>\n")
+                    .append("<td>").append(formatBoxes(p)).append("</td>\n")
                     .append("</tr>\n");
         }
 
@@ -84,5 +84,31 @@ public class ExportUtil {
 
         File file = new File(filePath);
         java.nio.file.Files.writeString(file.toPath(), content, StandardCharsets.UTF_8);
+    }
+
+    private static String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+
+        return input
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
+    }
+
+    private static String formatBoxes(Person p) {
+        StringBuilder sb = new StringBuilder("<ol>\n");
+        for (var box : p.getBoxes()) {
+            sb.append("<li>")
+                    .append(escapeHtml(box.getBoxName()))
+                    .append(" (expires: ")
+                    .append(escapeHtml(box.getExpiryDate().toString()))
+                    .append(")</li>\n");
+        }
+        sb.append("</ol>");
+        return sb.toString();
     }
 }
