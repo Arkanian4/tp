@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_DESCRIPTION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -32,7 +32,7 @@ public class RemarkCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Person personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Remark remark = new Remark(VALID_ORDER_DESCRIPTION_BOB);
+        Remark remark = new Remark("Deliver before noon"); // ≤ MAX_LENGTH
         RemarkCommand command = new RemarkCommand(INDEX_FIRST_PERSON, remark);
 
         Person remarkedPerson = new PersonBuilder(personToRemark).withRemark(remark.value).build();
@@ -49,7 +49,7 @@ public class RemarkCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand command = new RemarkCommand(outOfBoundIndex, new Remark(VALID_ORDER_DESCRIPTION_BOB));
+        RemarkCommand command = new RemarkCommand(outOfBoundIndex, new Remark("Deliver before noon"));
 
         assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -61,9 +61,21 @@ public class RemarkCommandTest {
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        RemarkCommand command = new RemarkCommand(outOfBoundIndex, new Remark(VALID_ORDER_DESCRIPTION_BOB));
+        RemarkCommand command = new RemarkCommand(outOfBoundIndex, new Remark("Deliver before noon"));
 
         assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void remark_tooLong_throwsIllegalArgumentException() {
+        String tooLongRemark = "A".repeat(Remark.MAX_LENGTH + 1);
+        assertThrows(IllegalArgumentException.class, () -> new Remark(tooLongRemark));
+    }
+
+    @Test
+    public void remark_invalidCharacters_throwsIllegalArgumentException() {
+        String invalidRemark = "!!@@##"; // non-alphanumeric
+        assertThrows(IllegalArgumentException.class, () -> new Remark(invalidRemark));
     }
 
     @Test
@@ -71,11 +83,11 @@ public class RemarkCommandTest {
         RemarkCommand firstCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark("first remark"));
         RemarkCommand secondCommand = new RemarkCommand(INDEX_SECOND_PERSON, new Remark("second remark"));
 
-        assertTrue(firstCommand.equals(firstCommand));
+        assertTrue(firstCommand.equals(firstCommand)); // same object
         assertTrue(firstCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark("first remark"))));
-        assertFalse(firstCommand.equals(1));
-        assertFalse(firstCommand.equals(null));
-        assertFalse(firstCommand.equals(secondCommand));
+        assertFalse(firstCommand.equals(1)); // different type
+        assertFalse(firstCommand.equals(null)); // null
+        assertFalse(firstCommand.equals(secondCommand)); // different index & remark
     }
 
     @Test

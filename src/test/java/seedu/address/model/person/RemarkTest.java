@@ -15,26 +15,26 @@ public class RemarkTest {
     }
 
     @Test
-    public void constructor_invalidRemark_throwsIllegalArgumentException() {
-        String invalidRemark = "#cake";
+    public void constructor_invalidCharacters_throwsIllegalArgumentException() {
+        String invalidRemark = "#cake!";
         assertThrows(IllegalArgumentException.class, () -> new Remark(invalidRemark));
     }
 
     @Test
-    public void isValidRemark() {
-        // null Remark
-        assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
+    public void constructor_tooLongRemark_throwsIllegalArgumentException() {
+        String tooLongRemark = "A".repeat(Remark.MAX_LENGTH + 1);
+        assertThrows(IllegalArgumentException.class, () -> new Remark(tooLongRemark));
+    }
 
-        // invalid Remarks
-        assertFalse(Remark.isValidRemark("")); // empty string
-        assertFalse(Remark.isValidRemark(" ")); // spaces only
-        assertFalse(Remark.isValidRemark("#")); // only non-alphanumeric characters
-        assertFalse(Remark.isValidRemark("cake!")); // contains non-alphanumeric characters
+    @Test
+    public void constructor_validRemark_createsRemark() {
+        String validRemark = "2 cakes";
+        Remark remark = new Remark(validRemark);
+        assertEquals(validRemark, remark.value);
 
-        // valid Remarks
-        assertTrue(Remark.isValidRemark("2 cakes")); // alphanumeric with spaces
-        assertTrue(Remark.isValidRemark("12345")); // numbers only
-        assertTrue(Remark.isValidRemark("Large Latte")); // letters with capitals
+        String maxRemark = "A".repeat(Remark.MAX_LENGTH);
+        remark = new Remark(maxRemark);
+        assertEquals(maxRemark, remark.value);
     }
 
     @Test
