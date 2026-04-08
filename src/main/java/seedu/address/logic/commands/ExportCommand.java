@@ -39,44 +39,35 @@ public class ExportCommand extends Command {
      * {@code data/delivery_assignments.html} is used. The command ensures
      * that the {@code data/} directory exists before exporting.
      * <p>
-     * Users are only allowed to provide a file name (no directories). All
-     * files are saved inside the {@code data/} folder. Providing a path or
-     * directories in the file name will result in a {@link CommandException}.
+     * Users are only allowed to provide a file name (no directories or paths).
+     * All files are saved inside the {@code data/} folder. Providing a path,
+     * directories, or {@code ..} in the file name will result in a {@link CommandException}.
      *
      * @param filePath the name of the file to export the delivery assignments to;
-     *                 must be a valid HTML file name ending with ".html"
-     * @throws CommandException if the file name is invalid or contains directories
+     *                 must be a valid HTML file name ending with {@code .html}
+     * @throws CommandException if the file name contains path separators, {@code ..},
+     *                          or does not end with {@code .html}
      */
     public ExportCommand(String filePath) throws CommandException {
-        // Ensure data directory exists
-        File dir = new File(DEFAULT_DIR);
+        File dir = new File("data");
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
         if (filePath == null || filePath.isBlank()) {
-            this.filePath = DEFAULT_DIR + File.separator + DEFAULT_FILENAME;
+            this.filePath = "data" + File.separator + DEFAULT_FILENAME;
             return;
         }
 
-        // Reject if user tries to include directories
-        File file = new File(filePath);
-        String fileName = file.getName();
-
-        if (!filePath.equals(fileName)) {
-            throw new CommandException(
-                    "Invalid file path. You can only provide a file name. "
-                            + "All exports are saved in the data/ folder."
-            );
+        if (filePath.contains("/") || filePath.contains("\\") || filePath.contains("..")) {
+            throw new CommandException("Invalid file name. Please provide a file name only, not a path.");
         }
 
-        if (!fileName.toLowerCase().endsWith(".html")) {
-            throw new CommandException(
-                    "Invalid file type. Please provide a file name ending with .html"
-            );
+        if (!filePath.toLowerCase().endsWith(".html")) {
+            throw new CommandException("Invalid file type. Please provide a file name ending with .html");
         }
 
-        this.filePath = DEFAULT_DIR + File.separator + fileName;
+        this.filePath = "data" + File.separator + filePath;
     }
 
     @Override
@@ -109,22 +100,4 @@ public class ExportCommand extends Command {
             assignments.assign(p.getAssignedDriver(), p);
         }
     }
-
-    private static String validatePath(String filePath, String expectedExtension) throws CommandException {
-        try {
-            File file = new File(filePath).getCanonicalFile();
-            File allowedDir = new File("data").getCanonicalFile();
-
-            if (!file.toPath().startsWith(allowedDir.toPath())) {
-                throw new CommandException("Invalid file path: must be within the data/ directory.");
-            }
-            if (!file.getName().toLowerCase().endsWith(expectedExtension)) {
-                throw new CommandException("Invalid file type: must be a " + expectedExtension + " file.");
-            }
-            return file.getPath();
-        } catch (IOException e) {
-            throw new CommandException("Invalid file path: " + e.getMessage());
-        }
-    }
-
 }
