@@ -30,7 +30,6 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Box;
 import seedu.address.model.person.DeliveryStatus;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -162,7 +161,6 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Remark remark;
-        private ExpiryDate expiryDate;
         private DeliveryStatus deliveryStatus;
         private Set<Tag> tags;
 
@@ -182,7 +180,6 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setExpiryDate(toCopy.expiryDate);
             setRemark(toCopy.remark);
             setDeliveryStatus(toCopy.deliveryStatus);
             setTags(toCopy.tags);
@@ -227,14 +224,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setExpiryDate(ExpiryDate expiryDate) {
-            this.expiryDate = expiryDate;
-        }
-
-        public Optional<ExpiryDate> getExpiryDate() {
-            return Optional.ofNullable(expiryDate);
-        }
-
         public void setRemark(Remark remark) {
             this.remark = remark;
         }
@@ -274,7 +263,6 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(expiryDate, otherEditPersonDescriptor.expiryDate)
                     && Objects.equals(remark, otherEditPersonDescriptor.remark)
                     && Objects.equals(deliveryStatus, otherEditPersonDescriptor.deliveryStatus)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
@@ -288,7 +276,6 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("remark", remark)
-                    .add("expiryDate", expiryDate)
                     .add("deliveryStatus", deliveryStatus)
                     .add("tags", tags)
                     .toString();

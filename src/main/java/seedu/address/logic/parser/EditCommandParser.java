@@ -67,10 +67,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setRemark(
                     ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARKS).get()));
         }
-        if (argMultimap.getValue(PREFIX_EXPIRY_DATE).isPresent()) {
-            editPersonDescriptor
-            .setExpiryDate(ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRY_DATE).get()));
-        }
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
