@@ -38,6 +38,8 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_MARK_PACKED = "Package(s) have been packed for:";
     public static final String MESSAGE_MARK_DELIVERED = "Package(s) successfully delivered to:";
 
+    public static final String MESSAGE_ALREADY_MARKED = "Failed to mark: %1$s is already marked as %2$s.";
+
     public final Index targetIndex;
     public final DeliveryStatus newDeliveryStatus;
 
@@ -73,6 +75,14 @@ public class MarkCommand extends Command {
 
         Person personToMark = lastShownList.get(targetIndex.getZeroBased());
         Person markedPerson = setStatusOf(personToMark);
+
+        if (personToMark.getDeliveryStatus() == newDeliveryStatus) {
+            throw new CommandException(String.format(
+                    MESSAGE_ALREADY_MARKED,
+                    personToMark.getName(),
+                    newDeliveryStatus
+            ));
+        }
 
         model.setPerson(personToMark, markedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
