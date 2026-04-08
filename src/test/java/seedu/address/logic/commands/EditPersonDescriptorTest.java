@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPIRY_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_DESCRIPTION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -55,10 +54,6 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different expiry date -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withExpiryDate(VALID_EXPIRY_DATE_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
         // different Remark -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withRemark(VALID_ORDER_DESCRIPTION_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
@@ -80,8 +75,7 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
                 + editPersonDescriptor.getEmail().orElse(null) + ", address="
                 + editPersonDescriptor.getAddress().orElse(null) + ", remark="
-                + editPersonDescriptor.getRemark().orElse(null) + ", expiryDate="
-                + editPersonDescriptor.getExpiryDate().orElse(null) + ", deliveryStatus="
+                + editPersonDescriptor.getRemark().orElse(null) + ", deliveryStatus="
                 + editPersonDescriptor.getDeliveryStatus().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());

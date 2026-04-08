@@ -10,10 +10,10 @@ import seedu.address.model.commons.phone.Phone;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DeliveryStatus;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+
 /**
  * A utility class to help with building EditPersonDescriptor objects.
  */
@@ -71,14 +71,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
-        return this;
-    }
-
-    /**
-     * Sets the {@code ExpiryDate} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withExpiryDate(String expiryDate) {
-        descriptor.setExpiryDate(new ExpiryDate(expiryDate));
         return this;
     }
 
