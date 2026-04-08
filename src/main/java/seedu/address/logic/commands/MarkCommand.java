@@ -34,9 +34,9 @@ public class MarkCommand extends Command {
             + "Parameters: INDEX, STATUS (STATUS must be one of the following: 'Pending', 'Packed', 'Delivered')\n"
             + "Example: " + COMMAND_WORD + " 1 Packed";
 
-    public static final String MESSAGE_MARK_PENDING = "Subscription has not been fulfilled for: %1$s";
-    public static final String MESSAGE_MARK_PACKED = "Package(s) have been packed for: %1$s";
-    public static final String MESSAGE_MARK_DELIVERED = "Package(s) successfully delivered to: %1$s";
+    public static final String MESSAGE_MARK_PENDING = "Subscription has not been fulfilled for:";
+    public static final String MESSAGE_MARK_PACKED = "Package(s) have been packed for:";
+    public static final String MESSAGE_MARK_DELIVERED = "Package(s) successfully delivered to:";
 
     public final Index targetIndex;
     public final DeliveryStatus newDeliveryStatus;
@@ -83,8 +83,10 @@ public class MarkCommand extends Command {
         case DELIVERED -> MESSAGE_MARK_DELIVERED;
         };
 
+        String formattedDetails = formatPersonDetails(markedPerson);
+
         return new CommandResult(
-                String.format(message, Messages.format(markedPerson))
+                message + "\n\n" + formattedDetails
         );
     }
 
@@ -115,6 +117,28 @@ public class MarkCommand extends Command {
         MarkCommand otherMarkCommand = (MarkCommand) other;
         return targetIndex.equals(otherMarkCommand.targetIndex)
                 && newDeliveryStatus == otherMarkCommand.newDeliveryStatus;
+    }
+
+    private String formatPersonDetails(Person p) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Recipient: ").append(p.getName()).append("\n");
+        sb.append("Phone: ").append(p.getPhone()).append("\n");
+        sb.append("Email: ").append(p.getEmail()).append("\n");
+        sb.append("Address: ").append(p.getAddress()).append("\n\n");
+
+        sb.append("Remark:\n").append(p.getRemark()).append("\n\n");
+
+        sb.append("Status: ").append(p.getDeliveryStatus()).append("\n");
+
+        if (p.getTags().isEmpty()) {
+            sb.append("Tags: -");
+        } else {
+            sb.append("Tags: ");
+            p.getTags().forEach(tag -> sb.append(tag.tagName).append(" "));
+        }
+
+        return sb.toString();
     }
 
     @Override
