@@ -6,7 +6,6 @@
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111, Singapore 123456",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -15,7 +14,7 @@
     "tags" : [ "friends" ],
     "boxes": [ {
       "boxName": "box-1",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-06-30"
     } ]
   }, {
     "name" : "Benson Meier",
@@ -23,7 +22,6 @@
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25, Singapore 546311",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -32,10 +30,10 @@
     "tags" : [ "owesMoney", "friends" ],
     "boxes": [ {
       "boxName": "box-1",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-06-30"
     }, {
       "boxName": "box-2",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-07-31"
     } ]
   }, {
     "name" : "Carl Kurz",
@@ -43,7 +41,6 @@
     "email" : "heinz@example.com",
     "address" : "wall street 111111",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -52,7 +49,7 @@
     "tags" : [ ],
     "boxes" : [ {
       "boxName": "box-3",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-08-31"
     } ]
   }, {
     "name" : "Daniel Meier",
@@ -60,7 +57,6 @@
     "email" : "cornelia@example.com",
     "address" : "10th street 012345",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -69,10 +65,10 @@
     "tags" : [ "friends" ],
     "boxes": [ {
       "boxName": "box-2",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-07-31"
     }, {
       "boxName": "box-3",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-08-31"
     } ]
   }, {
     "name" : "Elle Meyer",
@@ -80,7 +76,6 @@
     "email" : "werner@example.com",
     "address" : "michegan ave 642901",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -89,7 +84,7 @@
     "tags" : [ ],
     "boxes" : [ {
       "boxName": "box-2",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-07-31"
     } ]
   }, {
     "name" : "Fiona Kunz",
@@ -97,7 +92,6 @@
     "email" : "lydia@example.com",
     "address" : "little tokyo 654312",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -106,10 +100,10 @@
     "tags" : [ ],
     "boxes": [ {
       "boxName": "box-1",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-06-30"
     }, {
       "boxName": "box-3",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-08-31"
     } ]
   }, {
     "name" : "George Best",
@@ -117,7 +111,6 @@
     "email" : "anna@example.com",
     "address" : "4th street 746293",
     "remark" : "1 cake",
-    "expiryDate": "2026-12-31",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -126,7 +119,7 @@
     "tags" : [ ],
     "boxes" : [ {
       "boxName": "box-3",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-08-31"
     } ]
   } ]
 }

@@ -5,7 +5,6 @@
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111, 456123",
     "remark": "1 cake",
-    "expiryDate": "2026-11-11",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -14,7 +13,7 @@
     "tags": [ "friends" ],
     "boxes": [ {
       "boxName": "box-1",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-06-30"
     } ]
   }, {
     "name": "Alice Pauline",
@@ -22,7 +21,6 @@
     "email": "alice@example.com",
     "address": "4th street, 123456",
     "remark": "1 cake",
-    "expiryDate": "2026-11-11",
     "deliveryStatus": "pending",
     "driver": {
       "name": "Kyle",
@@ -30,7 +28,7 @@
     },
     "boxes": [ {
       "boxName": "box-1",
-      "expiryDate": "2026-12-31"
+      "expiryDate": "2026-06-30"
     } ]
   } ]
 }
