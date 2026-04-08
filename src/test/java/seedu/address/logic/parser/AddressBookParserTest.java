@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddBoxCommand;
@@ -37,6 +39,7 @@ import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.testutil.DateTestUtil;
 import seedu.address.testutil.EditBoxDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -45,6 +48,16 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
+
+    @BeforeEach
+    public void setUpClock() {
+        DateTestUtil.useFixedClock();
+    }
+
+    @AfterEach
+    public void resetClock() {
+        DateTestUtil.resetClock();
+    }
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -55,11 +68,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_addBox() throws Exception {
-        Person person = new PersonBuilder().build();
         AddBoxCommand command = (AddBoxCommand) parser.parseCommand(AddBoxCommand.COMMAND_WORD + " "
-            + "n/Amy b/box-1:2026-12-31");
+            + "n/Amy b/box-1:2");
         assertEquals(new AddBoxCommand(new Name("Amy"), Set.of(new Box("box-1",
-                new ExpiryDate("2026-12-31")))), command);
+                new ExpiryDate("2026-06-30")))), command);
     }
 
     @Test
@@ -93,10 +105,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_editBox() throws Exception {
-        Box box = new Box("box-2", new ExpiryDate("2026-12-31"));
+        Box box = new Box("box-2", new ExpiryDate("2026-07-31"));
         EditBoxDescriptor descriptor = new EditBoxDescriptorBuilder(box).build();
         EditBoxCommand command = (EditBoxCommand) parser.parseCommand(EditBoxCommand.COMMAND_WORD + " "
-            + " n/Amy Bee b/box-1 nb/box-2 ex/2026-12-31");
+            + " n/Amy Bee b/box-1 nb/box-2 ex/3");
         assertEquals(new EditBoxCommand(new Name("Amy Bee"), "box-1", descriptor), command);
     }
 

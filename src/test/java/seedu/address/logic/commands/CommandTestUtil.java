@@ -39,12 +39,13 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3, Singapore 017325";
     public static final String VALID_ORDER_DESCRIPTION_AMY = "2 muffins";
     public static final String VALID_ORDER_DESCRIPTION_BOB = "4 croissants";
-    public static final String VALID_EXPIRY_DATE_AMY = "2026-12-31";
+    public static final String VALID_EXPIRY_DATE_AMY = "2026-06-30";
     public static final String VALID_EXPIRY_DATE_BOB = "2026-12-30";
+    public static final String VALID_NUM_OF_MONTHS_AMY = "2";
     public static final String VALID_DELIVERY_STATUS_AMY = "pending";
     public static final String VALID_DELIVERY_STATUS_BOB = "delivered";
-    public static final String VALID_BOX_BOX1 = "box-1:2026-12-31";
-    public static final String VALID_BOX_BOX2 = "box-2:2026-12-30";
+    public static final String VALID_BOX_BOX1 = "box-1:2";
+    public static final String VALID_BOX_BOX2 = "box-2:3";
     public static final String VALID_BOX_NAME_BOX1 = "box-1";
     public static final String VALID_BOX_NAME_BOX2 = "box-2";
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -62,7 +63,7 @@ public class CommandTestUtil {
             " " + PREFIX_REMARKS + VALID_ORDER_DESCRIPTION_AMY;
     public static final String ORDER_DESCRIPTION_DESC_BOB =
             " " + PREFIX_REMARKS + VALID_ORDER_DESCRIPTION_BOB;
-    public static final String EXPIRY_DATE_DESC_AMY = " " + PREFIX_EXPIRY_DATE + VALID_EXPIRY_DATE_AMY;
+    public static final String EXPIRY_DATE_DESC_AMY = " " + PREFIX_EXPIRY_DATE + VALID_NUM_OF_MONTHS_AMY;
     public static final String BOX_DESC_BOX1 = " " + PREFIX_BOX + VALID_BOX_BOX1;
     public static final String BOX_DESC_BOX2 = " " + PREFIX_BOX + VALID_BOX_BOX2;
     public static final String BOX_NAME_DESC_BOX1 = " " + PREFIX_BOX + VALID_BOX_NAME_BOX1;
@@ -88,13 +89,11 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withExpiryDate(VALID_EXPIRY_DATE_AMY)
                 .withRemark(VALID_ORDER_DESCRIPTION_AMY)
                 .withDeliveryStatus(VALID_DELIVERY_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withExpiryDate(VALID_EXPIRY_DATE_BOB)
                 .withRemark(VALID_ORDER_DESCRIPTION_BOB)
                 .withDeliveryStatus(VALID_DELIVERY_STATUS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();

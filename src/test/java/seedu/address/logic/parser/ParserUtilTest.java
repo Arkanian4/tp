@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -22,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.DateTestUtil;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -38,12 +41,23 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "123 Main Street #0505 123456";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_ORDER_DESCRIPTION = "2 iced lattes";
-    private static final String VALID_EXPIRY_DATE = "2026-12-31";
+    private static final String VALID_EXPIRY_DATE = "2026-06-30";
+    private static final String VALID_NUM_OF_MONTHS = "2";
     private static final String VALID_DELIVERY_STATUS = "pending";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
+
+    @BeforeEach
+    public void setUpClock() {
+        DateTestUtil.useFixedClock();
+    }
+
+    @AfterEach
+    public void resetClock() {
+        DateTestUtil.resetClock();
+    }
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
@@ -193,14 +207,14 @@ public class ParserUtilTest {
     @Test
     public void parseExpiryDate_validValueWithoutWhitespace_returnsExpiryDate() throws Exception {
         ExpiryDate expectedExpiryDate = new ExpiryDate(VALID_EXPIRY_DATE);
-        assertEquals(expectedExpiryDate, ParserUtil.parseExpiryDate(VALID_EXPIRY_DATE));
+        assertEquals(expectedExpiryDate, ParserUtil.parseExpiryDate(VALID_NUM_OF_MONTHS));
     }
 
     @Test
     public void parseExpiryDate_validValueWithWhitespace_returnsTrimmedExpiryDate() throws Exception {
-        String expiryDateWithWhitespace = WHITESPACE + VALID_EXPIRY_DATE + WHITESPACE;
+        String numOfMonthsWithWhitespace = WHITESPACE + VALID_NUM_OF_MONTHS + WHITESPACE;
         ExpiryDate expectedExpiryDate = new ExpiryDate(VALID_EXPIRY_DATE);
-        assertEquals(expectedExpiryDate, ParserUtil.parseExpiryDate(expiryDateWithWhitespace));
+        assertEquals(expectedExpiryDate, ParserUtil.parseExpiryDate(numOfMonthsWithWhitespace));
     }
 
     @Test

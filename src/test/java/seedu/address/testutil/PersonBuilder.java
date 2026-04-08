@@ -49,7 +49,7 @@ public class PersonBuilder {
         remark = new Remark(DEFAULT_ORDER_DESCRIPTION);
         deliveryStatus = DeliveryStatus.fromString(DEFAULT_DELIVERY_STATUS);
         tags = new HashSet<>();
-        boxes = SampleDataUtil.getBoxSet("box-1:2026-12-31");
+        boxes = SampleDataUtil.getBoxSet("box-1:2");
         assignedDriver = null;
     }
 

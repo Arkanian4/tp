@@ -7,28 +7,41 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddBoxCommand;
 import seedu.address.model.commons.name.Name;
 import seedu.address.model.person.Box;
 import seedu.address.model.person.ExpiryDate;
+import seedu.address.testutil.DateTestUtil;
 
 public class AddBoxCommandParserTest {
 
     private AddBoxCommandParser parser = new AddBoxCommandParser();
 
+    @BeforeEach
+    public void setUpClock() {
+        DateTestUtil.useFixedClock();
+    }
+
+    @AfterEach
+    public void resetClock() {
+        DateTestUtil.resetClock();
+    }
+
     @Test
     public void execute_allFieldsPresent_success() {
-        String userInput = " n/Amy b/box-1:2026-12-31";
+        String userInput = " n/Amy b/box-1:2";
         AddBoxCommand expectedCommand = new AddBoxCommand(new Name("Amy"),
-                Set.of(new Box("box-1", new ExpiryDate("2026-12-31"))));
+                Set.of(new Box("box-1", new ExpiryDate("2026-06-30"))));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
     public void execute_duplicateName_failure() {
-        String userInput = PREAMBLE_WHITESPACE + "n/Amy n/Bob b/box-1:2026-12-31";
+        String userInput = PREAMBLE_WHITESPACE + "n/Amy n/Bob b/box-1:2";
         assertParseFailure(parser, userInput,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddBoxCommand.MESSAGE_USAGE));
     }
