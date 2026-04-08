@@ -36,6 +36,8 @@ public class ExportUtil {
                 .append("<style>\n").append(loadCss()).append("\n</style>\n")
                 .append("</head>\n<body>\n");
 
+        html.append(generateHeader());
+
         for (Driver driver : assignments.getDriversKeySet()) {
             html.append(generateDriverTable(driver, assignments.getDeliveryListFor(driver)));
         }
@@ -69,7 +71,7 @@ public class ExportUtil {
                     .append("<td>").append(escapeHtml(p.getPhone().toString())).append("</td>")
                     .append("<td>").append(escapeHtml(p.getEmail().toString())).append("</td>")
                     .append("<td>").append(escapeHtml(p.getAddress().toString())).append("</td>")
-                    .append("<td>").append(escapeHtml(p.getBoxes().toString())).append("</td>\n")
+                    .append("<td>").append(formatBoxes(p)).append("</td>\n")
                     .append("</tr>\n");
         }
 
@@ -97,5 +99,32 @@ public class ExportUtil {
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&#x27;");
+    }
+
+    private static String formatBoxes(Person p) {
+        StringBuilder sb = new StringBuilder("<ol>\n");
+        for (var box : p.getBoxes()) {
+            sb.append("<li>")
+                    .append(escapeHtml(box.getBoxName()))
+                    .append(" (expires: ")
+                    .append(escapeHtml(box.getExpiryDate().toString()))
+                    .append(")</li>\n");
+        }
+        sb.append("</ol>");
+        return sb.toString();
+    }
+
+    private static String generateHeader() {
+        String timestamp = java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm"));
+
+        return new StringBuilder()
+                .append("<div class=\"header\">\n")
+                .append("<h1>Delivery Assignments</h1>\n")
+                .append("<p class=\"timestamp\">Generated on: ")
+                .append(timestamp)
+                .append("</p>\n")
+                .append("</div>\n<hr>\n")
+                .toString();
     }
 }
