@@ -224,4 +224,31 @@ public class EditCommandTest {
         assertTrue(editedPerson.hasDriver(), "Driver should be preserved when address is unchanged");
     }
 
+    @Test
+    public void execute_nonAddressFieldChanged_personWithoutDriver_stillHasNoDriver() {
+        AddressBook addressBook = new AddressBook();
+        Person personWithoutDriver = new PersonBuilder()
+                .withName("No Driver")
+                .withEmail("nodriver@example.com")
+                .build();
+        addressBook.addPerson(personWithoutDriver);
+
+        Model localModel = new ModelManager(addressBook, new UserPrefs());
+        assertFalse(personWithoutDriver.hasDriver(), "Precondition: person must not have a driver");
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withPhone("99999999")
+                .build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        try {
+            editCommand.execute(localModel);
+        } catch (CommandException e) {
+            throw new AssertionError("execute() threw unexpectedly: " + e.getMessage());
+        }
+
+        Person editedPerson = localModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertFalse(editedPerson.hasDriver(), "Person without a driver should remain without one");
+    }
+
 }
