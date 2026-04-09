@@ -77,11 +77,18 @@ public class PostalCode {
      * @throws IllegalArgumentException if the postal code is not found in the address.
      */
     public static String extractPostalCode(String address) {
+        requireNonNull(address);
         Matcher postalCodeMatcher = POSTAL_CODE_PATTERN.matcher(address);
-        if (postalCodeMatcher.find()) {
-            return postalCodeMatcher.group();
+        if (!postalCodeMatcher.find()) {
+            throw new IllegalArgumentException("No valid postal code found in: " + address);
         }
-        throw new IllegalArgumentException("No valid postal code found in: " + address);
+
+        String firstPostalCode = postalCodeMatcher.group();
+        if (postalCodeMatcher.find()) {
+            throw new IllegalArgumentException("Multiple postal codes found in: " + address);
+        }
+
+        return firstPostalCode;
     }
 
     /**

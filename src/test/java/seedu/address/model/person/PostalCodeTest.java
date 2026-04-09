@@ -105,6 +105,13 @@ public class PostalCodeTest {
     }
 
     @Test
+    public void extractPostalCode_addressWithMultiplePostalCodes_throwsException() {
+        String address = "Blk 123 Sengkang Street 11, Singapore 123456 near 654321";
+        assertThrows(IllegalArgumentException.class, () ->
+                extractPostalCode(address));
+    }
+
+    @Test
     public void extractPostalCode_nullAddress_throwsException() {
         assertThrows(NullPointerException.class, () ->
                 extractPostalCode(null));

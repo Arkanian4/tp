@@ -73,6 +73,40 @@ public class ImportUtilTest {
     }
 
     @Test
+    public void parseCsv_quotedFieldContainingComma_preservesField() throws Exception {
+        String csv = "h1,h2,h3,h4,h5,h6,h7,h8,h9\n"
+                + "0,Alice,91234567,alice@example.com,\"123 Orchard Road, #05-01 Singapore 238888\""
+                + ",box-1,12,remark,extra\n";
+        Path file = writeCsv(csv);
+
+        List<String[]> rows = ImportUtil.parseCsv(file.toString());
+        assertEquals(1, rows.size());
+        assertEquals(9, rows.get(0).length);
+        assertEquals("123 Orchard Road, #05-01 Singapore 238888", rows.get(0)[4]);
+    }
+
+    @Test
+    public void parseCsv_escapedQuoteInQuotedField_preservesQuote() throws Exception {
+        String csv = "h1,h2,h3,h4,h5,h6,h7,h8,h9\n"
+                + "0,Alice,91234567,alice@example.com,123 Road 123456,box-1,12,"
+                + "\"Leave at \"\"front door\"\"\",extra\n";
+        Path file = writeCsv(csv);
+
+        List<String[]> rows = ImportUtil.parseCsv(file.toString());
+        assertEquals(1, rows.size());
+        assertEquals("Leave at \"front door\"", rows.get(0)[7]);
+    }
+
+    @Test
+    public void parseCsv_unmatchedQuote_throwsIoException() throws Exception {
+        String csv = "h1,h2,h3,h4,h5,h6,h7,h8,h9\n"
+                + "0,Alice,91234567,alice@example.com,\"123 Road 123456,box-1,12,remark,extra\n";
+        Path file = writeCsv(csv);
+
+        assertThrows(IOException.class, () -> ImportUtil.parseCsv(file.toString()));
+    }
+
+    @Test
     public void parseCsv_emptyFile_returnsEmptyList() throws Exception {
         Path file = writeCsv("");
         List<String[]> rows = ImportUtil.parseCsv(file.toString());

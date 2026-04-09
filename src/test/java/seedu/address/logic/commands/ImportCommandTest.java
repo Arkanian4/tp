@@ -122,6 +122,18 @@ public class ImportCommandTest {
     }
 
     @Test
+    public void execute_rowWithQuotedCommaInAddress_addsPerson() throws Exception {
+        String csv = "index,name,phone,email,address,box1name,box1months,remark,trailing\n"
+                + "0,Alice Test,91234567,alice@example.com,\"123 Orchard Road, #05-01 Singapore 238888\","
+                + "box-1,12,Some Remark,extra\n";
+        writeTestCsv(csv);
+
+        ImportCommand command = new ImportCommand(TEST_FILENAME);
+        CommandResult result = command.execute(emptyModel());
+        assertTrue(result.getFeedbackToUser().startsWith("Imported 1/1"));
+    }
+
+    @Test
     public void execute_rowTooShort_skippedSilently() throws Exception {
         // Row has fewer than 9 columns — skipped by ImportUtil, not counted at all
         String csv = "index,name,phone,email,address,box1name,box1months,remark,trailing\n"

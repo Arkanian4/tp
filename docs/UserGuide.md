@@ -258,7 +258,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [o/REMARK] b/BOX_NAME:NUMBE
 | `n/`   | `NAME`                            | Full name of the subscriber                                                                                                                               |
 | `p/`   | `PHONE_NUMBER`                    | Contact number                                                                                                                                            |
 | `e/`   | `EMAIL`                           | Email address                                                                                                                                             |
-| `a/`   | `ADDRESS`                         | Delivery address                                                                                                                                          |
+| `a/`   | `ADDRESS`                         | Delivery address containing exactly one 6-digit postal code                                                                                               |
 | `b/`   | `BOX_NAME`<br/>`NUMBER_OF_MONTHS` | - Box name: at least 1 required; repeat `b/` for multiple boxes<br/>- Number of months: Number of months till the end of the intended subscription period |
 | `o/`   | `REMARK`                          | Optional delivery note — defaults to `No remark` if omitted                                                                                               |
 | `t/`   | `TAG`                             | Optional tag(s) — can be repeated                                                                                                                         |
@@ -266,6 +266,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [o/REMARK] b/BOX_NAME:NUMBE
 > **Note:** The subscriber's delivery status is automatically set to `Pending` when first added.
 
 **Important:** The expiry date applies to **all** boxes added in the same command. To set different expiry dates per box, use [`addbox`](#adding-one-or-more-boxes-to-a-subscriber--addbox) separately for each.
+
+**Important:** Each address must contain exactly one 6-digit postal code.
 
 Examples:
 * `add n/Sarah Tan p/91234567 e/sarah@email.com a/Blk 10 Ang Mo Kio Ave 4 #05-03 Singapore 560010 b/box-1:2`
@@ -367,7 +369,9 @@ Format: `delete INDEX` OR `delete EMAIL`
 
 * Identifies the subscriber by their list index or their email address.
 * The `INDEX` **must be a positive integer** (1, 2, 3, …).
-* The email must exactly match an existing subscriber's email.
+* The email must exactly match a subscriber shown in the current list.
+* If the subscriber you want is not currently shown, run [`list`](#listing-all-subscribers--list),
+  [`find`](#finding-subscribers--find), or [`filter`](#filtering-subscribers--filter) first so that they appear.
 
 > **Warning:** Deletion is permanent and cannot be undone. Use [`find`](#finding-subscribers--find) to confirm you have the right subscriber before deleting. Consider running [`export`](#exporting-driver-delivery-assignments--export) before bulk deletions to save a copy of your data.
 
@@ -392,6 +396,9 @@ Format: `mark INDEX STATUS`
 * `STATUS` must be one of: `PENDING`, `PACKED`, or `DELIVERED` (not case-sensitive).
 
 > **Tip:** Use `mark` as you progress through your fulfilment workflow — mark as `packed` once boxes are ready, then `delivered` after drop-off. This keeps your list up to date for driver coordination.
+>
+> After changing subscriber details or fulfilment progress, run [`assign`](#assigning-drivers--assign) again before
+> using [`export`](#exporting-driver-delivery-assignments--export) to generate a fresh handoff for drivers.
 
 Examples:
 * `mark 1 packed` — marks subscriber 1 as Packed.
@@ -450,6 +457,7 @@ Adds one or more boxes to an existing subscriber.
 Format: `addbox n/NAME b/BOX_NAME:NUMBER_OF_MONTHS [b/BOX_NAME:NUMBER_OF_MONTHS]...`
 
 * The subscriber is identified by their exact `NAME`.
+* Name-based box commands assume subscriber names are unique in your current data.
 * The expiry date applies to all boxes added in the same command.
 * See also: [`add`](#adding-a-subscriber--add) to add boxes when first creating a subscriber.
 
@@ -472,6 +480,7 @@ Edits the name or expiry date of an existing box belonging to a subscriber.
 Format: `editbox n/NAME b/BOX_NAME [nb/NEW_BOX_NAME] [ex/NUMBER_OF_MONTHS]`
 
 * The subscriber is identified by their exact `NAME`.
+* Name-based box commands assume subscriber names are unique in your current data.
 * `b/BOX_NAME` identifies which box to edit.
 * At least one of `nb/` or `ex/` must be provided.
 * See also: [`addbox`](#adding-one-or-more-boxes-to-a-subscriber--addbox) to add new boxes, [`deletebox`](#deleting-boxes--deletebox) to remove boxes.
@@ -495,6 +504,7 @@ Removes one or more boxes from a subscriber.
 Format: `deletebox n/NAME b/BOX_NAME [b/BOX_NAME]...`
 
 * The subscriber is identified by their exact `NAME`.
+* Name-based box commands assume subscriber names are unique in your current data.
 * At least one box must be specified.
 * See also: [`addbox`](#adding-one-or-more-boxes-to-a-subscriber--addbox) to add boxes.
 
@@ -545,6 +555,8 @@ Format: `export [FILE_PATH]`
 * If a file already exists at the specified path, it will be overwritten.
 * `FILE_PATH` must end with `.html`.
 * Requires at least one driver to have been assigned via [`assign`](#assigning-drivers--assign) first.
+* Export is intended as a final handoff snapshot. If you change subscribers, boxes, remarks, or delivery status after
+  assigning drivers, run [`assign`](#assigning-drivers--assign) again before exporting.
 
 > **Tip:** Open the exported `.html` file in any web browser to view a clean, printable summary. You can share it with your drivers directly.
 
@@ -552,7 +564,7 @@ Format: `export [FILE_PATH]`
 
 Examples:
 * `export` — saves to `data/delivery_assignments.html`.
-* `export data/march-delivery.html` — saves to a named file for a specific run.
+* `export march-delivery.html` — saves to a named file for a specific run inside the `data/` folder.
 
 **Expected output:** The output panel confirms the file has been saved and shows the file path.
 
