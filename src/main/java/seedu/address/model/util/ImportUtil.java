@@ -27,7 +27,7 @@ public class ImportUtil {
                     continue;
                 }
 
-                String[] row = line.split(",", -1);
+                String[] row = parseCsvRow(line);
                 stripFields(row);
 
                 if (row.length < 9) {
@@ -40,12 +40,43 @@ public class ImportUtil {
         return rowsList;
     }
 
+    /**
+     * Parses a single CSV row, supporting quoted fields and escaped quotes.
+     */
+    private static String[] parseCsvRow(String line) throws IOException {
+        List<String> fields = new ArrayList<>();
+        StringBuilder currentField = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (int i = 0; i < line.length(); i++) {
+            char currentChar = line.charAt(i);
+
+            if (currentChar == '"') {
+                if (inQuotes && i + 1 < line.length() && line.charAt(i + 1) == '"') {
+                    currentField.append('"');
+                    i++;
+                } else {
+                    inQuotes = !inQuotes;
+                }
+            } else if (currentChar == ',' && !inQuotes) {
+                fields.add(currentField.toString());
+                currentField.setLength(0);
+            } else {
+                currentField.append(currentChar);
+            }
+        }
+
+        if (inQuotes) {
+            throw new IOException("Malformed CSV row: unmatched quote");
+        }
+
+        fields.add(currentField.toString());
+        return fields.toArray(new String[0]);
+    }
+
     private static void stripFields(String[] row) {
         for (int i = 0; i < row.length; i++) {
             row[i] = row[i].trim();
-            if (row[i].startsWith("\"") && row[i].endsWith("\"")) {
-                row[i] = row[i].substring(1, row[i].length() - 1);
-            }
         }
     }
 }

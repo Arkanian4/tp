@@ -30,6 +30,13 @@ public class AddressTest {
     }
 
     @Test
+    public void constructor_multiplePostalCodes_throwsIllegalArgumentException() {
+        String multiplePostalCodesAddress = "Blk 123 Jurong East St 32, 123456 near 654321";
+        assertThrows(IllegalArgumentException.class, Address.MESSAGE_CONSTRAINTS_POSTAL_CODE, () ->
+                new Address(multiplePostalCodesAddress));
+    }
+
+    @Test
     public void isValidAddress() {
         // null address
         assertFalse(Address.isValidAddress(null));
@@ -40,6 +47,7 @@ public class AddressTest {
         assertFalse(Address.isValidAddress("sengkang")); // no 6-digit postal code
         assertFalse(Address.isValidAddress("12345")); // only 5 digits
         assertFalse(Address.isValidAddress("1234567")); // 7 digits
+        assertFalse(Address.isValidAddress("Blk 123 Jurong East St 32, 123456 near 654321")); // multiple postal codes
 
         // valid addresses
         assertTrue(Address.isValidAddress("123456")); // only postal code
@@ -66,6 +74,12 @@ public class AddressTest {
     public void getValidationMessage_noPostalCode_returnsPostalCodeMessage() {
         assertEquals(Address.MESSAGE_CONSTRAINTS_POSTAL_CODE,
                 Address.getValidationMessage("Blk 123 Jurong East St 32"));
+    }
+
+    @Test
+    public void getValidationMessage_multiplePostalCodes_returnsPostalCodeMessage() {
+        assertEquals(Address.MESSAGE_CONSTRAINTS_POSTAL_CODE,
+                Address.getValidationMessage("Blk 123 Jurong East St 32, 123456 near 654321"));
     }
 
     @Test
@@ -108,9 +122,8 @@ public class AddressTest {
     }
 
     @Test
-    public void isValidAddress_multipleNumbers_usesFirstValidPostalCode() {
-        // Address contains two 6-digit numbers; first one (123456) has valid prefix
-        assertTrue(Address.isValidAddress("Unit 100000, Block 123456"));
+    public void isValidAddress_multiplePostalCodes_invalid() {
+        assertFalse(Address.isValidAddress("Unit 100000, Block 123456"));
     }
 
     @Test
