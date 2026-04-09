@@ -16,14 +16,14 @@ public class PersonHasBoxPredicateTest {
     @Test
     public void test_personWithMatchingBox_returnsTrue() {
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Arrays.asList("box-1"));
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertTrue(predicate.test(person));
     }
 
     @Test
     public void test_personWithNoMatchingBox_returnsFalse() {
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Arrays.asList("box-2"));
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertFalse(predicate.test(person));
     }
 
@@ -31,28 +31,28 @@ public class PersonHasBoxPredicateTest {
     public void test_partialKeywordMatch_returnsTrue() {
         // "box" is a substring of "box-1"
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Arrays.asList("box"));
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertTrue(predicate.test(person));
     }
 
     @Test
     public void test_caseInsensitiveMatch_returnsTrue() {
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Arrays.asList("BOX-1"));
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertTrue(predicate.test(person));
     }
 
     @Test
     public void test_emptyKeywords_returnsFalse() {
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Collections.emptyList());
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertFalse(predicate.test(person));
     }
 
     @Test
     public void test_multipleKeywords_matchesAny() {
         PersonHasBoxPredicate predicate = new PersonHasBoxPredicate(Arrays.asList("box-2", "box-1"));
-        Person person = new PersonBuilder().withBoxes("box-1:2026-12-31").build();
+        Person person = new PersonBuilder().withBoxes("box-1:2").build();
         assertTrue(predicate.test(person));
     }
 
