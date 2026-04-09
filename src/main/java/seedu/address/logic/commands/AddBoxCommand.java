@@ -11,17 +11,12 @@ import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.BoxUtil;
+import seedu.address.logic.commands.util.CommandPersonUtil;
 import seedu.address.model.Model;
 import seedu.address.model.commons.name.Name;
-import seedu.address.model.commons.phone.Phone;
-import seedu.address.model.delivery.Driver;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Box;
-import seedu.address.model.person.DeliveryStatus;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
-import seedu.address.model.tag.Tag;
 
 /**
  * Adds one or more boxes to a person in the address book.
@@ -62,57 +57,27 @@ public class AddBoxCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
 
-        Person personToEdit = null;
-        for (Person person : lastShownList) {
-            if (person.getName().equals(this.subscriberName)) {
-                personToEdit = person;
-                break;
-            }
-        }
+        Person personToEdit = findSubscriber(model);
+        checkNoDuplicateBoxNames(personToEdit);
 
-        if (personToEdit == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
+        Set<Box> updatedBoxes = BoxUtil.addBoxes(personToEdit, boxesToAdd);
+        Person editedPerson = CommandPersonUtil.withBoxes(personToEdit, updatedBoxes);
 
-        if (hasMatchingBoxNames(personToEdit, boxesToAdd)) {
-            throw new CommandException(String.format(MESSAGE_EXISTING_BOX_NAME, personToEdit.getName()));
-        }
-        Person editedPerson = createPersonWithUpdatedBoxes(personToEdit, boxesToAdd);
         model.setPerson(personToEdit, editedPerson);
         return new CommandResult(String.format(MESSAGE_SUCCESS, boxesToAdd, personToEdit.getName()));
     }
 
-    /**
-     * Checks if {@code personToEdit}'s boxes and {@code boxesToAdd} have any name matches.
-     */
-    public boolean hasMatchingBoxNames(Person personToEdit, Set<Box> boxesToAdd) {
-        Set<String> existingBoxNames = personToEdit.getBoxes().stream()
-                .map(Box::getBoxName)
-                .collect(Collectors.toSet());
-
-        return boxesToAdd.stream()
-                .map(Box::getBoxName)
-                .anyMatch(existingBoxNames::contains);
+    private Person findSubscriber(Model model) throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        return CommandPersonUtil.findPersonByName(lastShownList, subscriberName)
+                .orElseThrow(() -> new CommandException(MESSAGE_PERSON_NOT_FOUND));
     }
 
-    private static Person createPersonWithUpdatedBoxes(Person personToEdit, Set<Box> boxesToAdd) {
-        assert personToEdit != null;
-        assert boxesToAdd != null;
-
-        Name name = personToEdit.getName();
-        Phone phone = personToEdit.getPhone();
-        Email email = personToEdit.getEmail();
-        Address address = personToEdit.getAddress();
-        Remark remark = personToEdit.getRemark();
-        DeliveryStatus deliveryStatus = personToEdit.getDeliveryStatus();
-        Set<Tag> tags = personToEdit.getTags();
-        Driver driver = personToEdit.hasDriver() ? personToEdit.getAssignedDriver() : null;
-
-        Set<Box> updatedBoxes = new HashSet<>(personToEdit.getBoxes());
-        updatedBoxes.addAll(boxesToAdd);
-        return new Person(name, phone, email, address, updatedBoxes, remark, deliveryStatus, tags, driver);
+    private void checkNoDuplicateBoxNames(Person personToEdit) throws CommandException {
+        if (BoxUtil.hasMatchingBoxNames(personToEdit, boxesToAdd)) {
+            throw new CommandException(String.format(MESSAGE_EXISTING_BOX_NAME, personToEdit.getName()));
+        }
     }
 
     @Override

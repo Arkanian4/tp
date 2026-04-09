@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CommandPersonUtil;
 import seedu.address.model.Model;
 import seedu.address.model.commons.name.Name;
 import seedu.address.model.commons.phone.Phone;
@@ -80,41 +81,35 @@ public class EditBoxCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
 
-        Person personToEdit = null;
-        for (Person person : lastShownList) {
-            if (person.getName().equals(this.subscriberName)) {
-                personToEdit = person;
-                break;
-            }
-        }
-
-        if (personToEdit == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
-
-        Box boxToEdit = null;
-        for (Box box : personToEdit.getBoxes()) {
-            if (box.boxName.equals(this.boxName)) {
-                boxToEdit = box;
-                break;
-            }
-        }
-        if (boxToEdit == null) {
-            throw new CommandException(MESSAGE_BOX_NOT_FOUND);
-        }
-
+        Person personToEdit = findSubscriber(model);
+        Box boxToEdit = findBox(personToEdit);
         Box editedBox = createEditedBox(boxToEdit, editBoxDescriptor);
         Person editedPerson = createEditedPerson(personToEdit, boxToEdit, editedBox);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-
+        ensureNoDuplicatePerson(model, personToEdit, editedPerson);
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_BOX_SUCCESS, editedBox, subscriberName));
+    }
+
+    private Person findSubscriber(Model model) throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        return CommandPersonUtil.findPersonByName(lastShownList, subscriberName)
+                .orElseThrow(() -> new CommandException(MESSAGE_PERSON_NOT_FOUND));
+    }
+
+    private Box findBox(Person person) throws CommandException {
+        return person.getBoxes().stream()
+                .filter(box -> box.boxName.equals(boxName))
+                .findFirst()
+                .orElseThrow(() -> new CommandException(MESSAGE_BOX_NOT_FOUND));
+    }
+
+    private void ensureNoDuplicatePerson(Model model, Person original, Person edited) throws CommandException {
+        if (!original.isSamePerson(edited) && model.hasPerson(edited)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
     }
 
     /**
