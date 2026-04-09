@@ -236,9 +236,9 @@ public class CommandAssistant {
     private static String suggestForRemark(String arguments) {
         String trimmed = arguments.trim();
         if (trimmed.isEmpty()) {
-            return " INDEX REMARK";
+            return " INDEX r/REMARK";
         }
-        return trimmed.contains(" ") ? "" : " REMARK";
+        return trimmed.contains(" ") ? "" : " r/REMARK";
     }
 
     private static void appendMissingPrefix(StringBuilder suggestion, ArgumentMultimap argMultimap,
