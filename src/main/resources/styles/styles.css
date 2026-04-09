@@ -38,6 +38,21 @@ th, td {
     word-break: break-word;
 }
 
+.status-pending {
+    color: #b32605;
+    font-weight: bold;
+}
+
+.status-packed {
+    color: #ffa716;
+    font-weight: bold;
+}
+
+.status-delivered {
+    color: #44b51d;
+    font-weight: bold;
+}
+
 th:nth-child(1), td:nth-child(1) { width: 5%; } /* Status */
 th:nth-child(2), td:nth-child(2) { width: 15%; } /* Name */
 th:nth-child(3), td:nth-child(3) { width: 10%; } /* Phone */

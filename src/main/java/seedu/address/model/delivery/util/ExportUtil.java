@@ -77,7 +77,11 @@ public class ExportUtil {
 
         for (Person p : persons) {
             table.append("<tr>\n")
-                    .append("<td>").append(escapeHtml(p.getDeliveryStatus().toString())).append("</td>\n")
+                    .append("<td class=\"status-")
+                    .append(p.getDeliveryStatus().toString().toLowerCase())
+                    .append("\">")
+                    .append(escapeHtml(p.getDeliveryStatus().toString()))
+                    .append("</td>\n")
                     .append("<td>").append(escapeHtml(p.getName().toString())).append("</td>")
                     .append("<td>").append(escapeHtml(p.getPhone().toString())).append("</td>")
                     .append("<td>").append(escapeHtml(p.getEmail().toString())).append("</td>")
