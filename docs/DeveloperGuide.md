@@ -495,6 +495,426 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+---
+
+**Use case: UC05 — View help**
+
+**MSS**
+
+1. Startup owner requests to view the help information.
+2. Client2Door displays the help information.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Startup owner enters an invalid command word (e.g., typo, misspelling).
+
+    * 1a1. Client2Door shows an error message indicating the command is invalid.
+
+      Use case ends.
+
+* 1b. Startup owner enters an invalid command format.
+
+    * 1b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+---
+
+**Use case: UC06 — Edit a subscriber**
+
+**MSS**
+
+1. Startup owner requests to edit a subscriber.
+2. Startup owner provides the index of the subscriber and the updated field(s).
+3. Client2Door updates the subscriber details.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid index.
+
+    * 2a1. Client2Door shows invalid index error message.
+
+      Use case ends.
+
+* 2b. Startup owner enters an invalid command format.
+
+    * 2b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2c. Startup owner provides invalid field value(s).
+
+    * 2c1. Client2Door shows an error message indicating the invalid field value(s).
+
+      Use case ends.
+
+* 2d. Startup owner does not provide any field to update.
+
+    * 2d1. Client2Door shows an error message indicating that at least one field must be provided.
+
+      Use case ends.
+
+---
+
+**Use case: UC07 — Update a subscriber remark**
+
+**MSS**
+
+1. Startup owner requests to update a subscriber's remark.
+2. Startup owner provides the subscriber index and the new remark.
+3. Client2Door updates the subscriber's remark.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid index.
+
+    * 2a1. Client2Door shows invalid index error message.
+
+      Use case ends.
+
+* 2b. Startup owner enters an invalid command format.
+
+    * 2b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+---
+
+**Use case: UC08 — Find subscribers**
+
+**MSS**
+
+1. Startup owner requests to find subscribers by keyword.
+2. Startup owner provides one or more keywords.
+3. Client2Door searches for matching subscribers.
+4. Client2Door displays the matching subscribers.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 3a. No subscribers match the keywords.
+
+    * 3a1. Client2Door shows an empty result list.
+
+      Use case ends.
+
+---
+
+**Use case: UC09 — Update delivery status**
+
+**MSS**
+
+1. Startup owner requests to update a subscriber's delivery status.
+2. Startup owner provides the subscriber index and the new status.
+3. Client2Door updates the subscriber's delivery status.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid index.
+
+    * 2a1. Client2Door shows invalid index error message.
+
+      Use case ends.
+
+* 2b. Startup owner enters an invalid command format.
+
+    * 2b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2c. Startup owner provides an invalid delivery status.
+
+    * 2c1. Client2Door shows an error message indicating the status is invalid.
+
+      Use case ends.
+
+---
+
+**Use case: UC10 — Filter subscribers**
+
+**MSS**
+
+1. Startup owner requests to filter subscribers.
+2. Startup owner provides one or more filter criteria.
+3. Client2Door filters the subscriber list.
+4. Client2Door displays the matching subscribers.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 3a. No subscribers match the filter criteria.
+
+    * 3a1. Client2Door shows an empty result list.
+
+      Use case ends.
+
+---
+
+**Use case: UC11 — Add box subscriptions to a subscriber**
+
+**MSS**
+
+1. Startup owner requests to add one or more box subscriptions to a subscriber.
+2. Startup owner provides the subscriber name and box subscription detail(s).
+3. Client2Door adds the box subscription(s) to the specified subscriber.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2b. Startup owner provides an invalid subscriber name.
+
+    * 2b1. Client2Door shows an error message indicating the subscriber cannot be found.
+
+      Use case ends.
+
+* 2c. Startup owner provides invalid box subscription detail(s).
+
+    * 2c1. Client2Door shows an error message indicating the box subscription detail(s) are invalid.
+
+      Use case ends.
+
+---
+
+**Use case: UC12 — Edit a box subscription**
+
+**MSS**
+
+1. Startup owner requests to edit a subscriber's box subscription.
+2. Startup owner provides the subscriber name, the target box, and the updated field(s).
+3. Client2Door updates the box subscription.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2b. Startup owner provides an invalid subscriber name.
+
+    * 2b1. Client2Door shows an error message indicating the subscriber cannot be found.
+
+      Use case ends.
+
+* 2c. Startup owner provides a box that does not exist for that subscriber.
+
+    * 2c1. Client2Door shows an error message indicating the box cannot be found.
+
+      Use case ends.
+
+* 2d. Startup owner does not provide any field to update.
+
+    * 2d1. Client2Door shows an error message indicating that at least one field must be provided.
+
+      Use case ends.
+
+---
+
+**Use case: UC13 — Delete box subscriptions from a subscriber**
+
+**MSS**
+
+1. Startup owner requests to delete one or more box subscriptions from a subscriber.
+2. Startup owner provides the subscriber name and the box subscription(s) to delete.
+3. Client2Door deletes the specified box subscription(s).
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2b. Startup owner provides an invalid subscriber name.
+
+    * 2b1. Client2Door shows an error message indicating the subscriber cannot be found.
+
+      Use case ends.
+
+* 2c. Startup owner provides a box that does not exist for that subscriber.
+
+    * 2c1. Client2Door shows an error message indicating the box cannot be found.
+
+      Use case ends.
+
+* 3a. The deleted box subscription(s) were the subscriber's last remaining box subscription(s).
+
+    * 3a1. Client2Door deletes the subscriber from the active subscriber list.
+
+      Use case ends.
+
+---
+
+**Use case: UC14 — Export delivery assignments**
+
+**MSS**
+
+1. Startup owner requests to export delivery assignments.
+2. Startup owner optionally provides a file path.
+3. Client2Door generates the export file.
+4. Client2Door displays a success message indicating the export location.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 3a. There are no delivery assignments to export.
+
+    * 3a1. Client2Door shows an error message indicating that export cannot be performed.
+
+      Use case ends.
+
+* 3b. Client2Door is unable to generate or save the export file.
+
+    * 3b1. Client2Door shows an error message indicating that export failed.
+
+      Use case ends.
+
+---
+
+**Use case: UC15 — Import subscribers from CSV**
+
+**MSS**
+
+1. Startup owner requests to import subscribers from a CSV file.
+2. Startup owner provides the CSV file name.
+3. Client2Door reads the CSV file and imports valid subscribers.
+4. Client2Door displays a success message and updated subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Startup owner enters an invalid command format.
+
+    * 2a1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+* 2b. Startup owner provides an invalid file name.
+
+    * 2b1. Client2Door shows an error message indicating the file name is invalid.
+
+      Use case ends.
+
+* 3a. The CSV file cannot be found.
+
+    * 3a1. Client2Door shows an error message indicating that the file cannot be found.
+
+      Use case ends.
+
+* 3b. The CSV file contains invalid or duplicate rows.
+
+    * 3b1. Client2Door skips the invalid or duplicate rows and reports them.
+
+      Use case ends.
+
+* 3c. No valid subscribers can be imported from the CSV file.
+
+    * 3c1. Client2Door shows an error or summary message indicating that no subscribers were imported.
+
+      Use case ends.
+
+---
+
+**Use case: UC16 — Clear all subscribers**
+
+**MSS**
+
+1. Startup owner requests to clear all subscribers.
+2. Client2Door removes all subscribers from the active subscriber list.
+3. Client2Door displays a success message and an empty subscriber list.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Startup owner enters an invalid command word (e.g., typo, misspelling).
+
+    * 1a1. Client2Door shows an error message indicating the command is invalid.
+
+      Use case ends.
+
+* 1b. Startup owner enters an invalid command format.
+
+    * 1b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+---
+
+**Use case: UC17 — Exit the application**
+
+**MSS**
+
+1. Startup owner requests to exit Client2Door.
+2. Client2Door closes the application.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Startup owner enters an invalid command word (e.g., typo, misspelling).
+
+    * 1a1. Client2Door shows an error message indicating the command is invalid.
+
+      Use case ends.
+
+* 1b. Startup owner enters an invalid command format.
+
+    * 1b1. Client2Door shows an error message indicating the format is invalid.
+
+      Use case ends.
+
+---
+
 ### Non-Functional Requirements
 
 **Environment Requirements**
