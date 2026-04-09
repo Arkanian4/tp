@@ -130,7 +130,7 @@ Managing recurring orders in a spreadsheet gets messy fast — you lose track of
 
 ### Understanding the interface
 
-![Ui](../docs/images/Release1.4-New_UI.png)
+![Ui](../docs/images/Release1.5-New_UI.png)
 
 The app window has three main areas:
 
@@ -273,7 +273,7 @@ Examples:
 
 **Expected output:** The subscriber appears in the result panel at the bottom, and the output panel confirms:
 
-![Add command result](../docs/images/Release1.3Add.png)
+![Add command result](../docs/images/Release1.5Add.png)
 
 ---
 
@@ -309,7 +309,7 @@ Examples:
 
 **Expected output:** The output panel confirms the edit and shows the subscriber's updated details.
 
-![Edit command result](../docs/images/Release1.3Edit.png)
+![Edit command result](../docs/images/Release1.5Edit.png)
 
 ---
 
@@ -317,7 +317,7 @@ Examples:
 
 Updates the delivery remark for a subscriber.
 
-Format: `remark INDEX REMARK`
+Format: `remark INDEX r/REMARK`
 
 * The `INDEX` refers to the number shown next to the subscriber in the current list. It **must be a positive integer** (1, 2, 3, …).
 * You can also update remarks via [`edit`](#editing-a-subscriber-edit) using the `r/` prefix.
@@ -325,12 +325,12 @@ Format: `remark INDEX REMARK`
 > **Tip:** Use remarks for delivery-specific notes like "ring doorbell", "leave at guardhouse", or "call before arriving".
 
 Examples:
-* `remark 1 leave at door and no need to ring bell`
-* `remark 2 allergic to nuts`
+* `remark 1 r/leave at door and no need to ring bell`
+* `remark 2 r/allergic to nuts`
 
 **Expected output:** The output panel confirms the remark has been updated.
 
-![Remark command result](../docs/images/Release1.3Remark.png)
+![Remark command result](../docs/images/Release1.5Remark.png)
 
 ---
 
@@ -353,7 +353,7 @@ Examples:
 
 **Expected output:** The list filters to matching subscribers. The output panel shows how many were found.
 
-![result for 'find John'](../docs/images/findJohnResult.png)
+![result for 'find John'](../docs/images/Release1.5FindJohnResult.png)
 
 Run [`list`](#listing-all-subscribers-list) to return to the full subscriber view.
 
@@ -397,7 +397,7 @@ Examples:
 
 **Expected output:** The subscriber's status updates in the list. The output panel confirms the change.
 
-![Mark command result](../docs/images/Release1.3Mark.png)
+![Mark command result](../docs/images/Release1.5Mark.png)
 
 ---
 
@@ -423,21 +423,21 @@ Examples:
 
 Before filtering, all subscribers are shown:
 
-![Filter before (box)](../docs/images/Release1.4-FilterBefore.png)
+![Filter before (box)](../docs/images/Release1.5-FilterBefore.png)
 
 After running `filter box-1`, only matching subscribers remain:
 
-![Filter after (box)](../docs/images/Release1.4-FilterAfter.png)
+![Filter after (box)](../docs/images/Release1.5-FilterAfter.png)
 
 **Expected output — filtering by driver:**
 
 Before filtering by driver:
 
-![Filter before (driver)](../docs/images/Release1.4-FilterBeforeDriver.png)
+![Filter before (driver)](../docs/images/Release1.5-FilterBeforeDriver.png)
 
-After running `filter d/David Lim`, only that driver's subscribers are shown:
+After running `filter d/driver 1`, only that driver's subscribers are shown:
 
-![Filter after (driver)](../docs/images/Release1.4-FilterAfterDriver.png)
+![Filter after (driver)](../docs/images/Release1.5-FilterAfterDriver.png)
 
 ---
 
@@ -460,6 +460,8 @@ Suppose the current date is `8 April 2026`,
 
 **Expected output:** The output panel confirms the boxes have been added and shows the subscriber's updated details.
 
+![Addbox command result](../docs/images/Release1.5-AddBox.png)
+
 ---
 
 ### Editing a box : `editbox`
@@ -481,7 +483,7 @@ Examples:
 
 **Expected output:** The output panel confirms the update and shows the box's new details.
 
-![Editbox command result](../docs/images/Release1.4-EditBox.png)
+![Editbox command result](../docs/images/Release1.5-EditBox.png)
 
 ---
 
@@ -503,7 +505,7 @@ Examples:
 
 **Expected output:** The output panel confirms which boxes were removed.
 
-![Deletebox command result](../docs/images/Release1.4-DeleteBox.png)
+![Deletebox command result](../docs/images/Release1.5-DeleteBox.png)
 
 ---
 
