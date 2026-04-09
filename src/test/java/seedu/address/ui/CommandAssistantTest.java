@@ -102,7 +102,7 @@ public class CommandAssistantTest {
 
     @Test
     public void getSuggestion_uniquePartialCommand_completesCommandWordAndTemplate() {
-        assertEquals("mark INDEX REMARK", commandAssistant.getSuggestion("re"));
+        assertEquals("mark INDEX r/REMARK", commandAssistant.getSuggestion("re"));
     }
 
     @Test
