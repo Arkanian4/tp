@@ -14,7 +14,7 @@ public class Box implements Comparable<Box> {
     public static final String MESSAGE_CONSTRAINTS = "Box names should follow the format '[type]-[number]',"
             + " where type consists of only lowercase letters and number is a single digit number";
     public static final String MESSAGE_INVALID_BOX_WITH_EXPIRY_FORMAT =
-            "Boxes must be in the format b/BOX_NAME:NUMBER_OF_MONTHS";
+            "Boxes must be in the format b/BOX_NAME:MONTHS_SUBSCRIBED";
     public static final String VALIDATION_REGEX = "^[a-z]+-\\d{1}$";
 
     public final String boxName;
