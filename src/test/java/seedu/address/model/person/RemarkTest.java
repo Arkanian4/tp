@@ -72,22 +72,22 @@ public class RemarkTest {
     }
 
     @Test
-    public void isValidRemark_singleCharacter_valid() {
-        assertTrue(Remark.isValidRemark("a")); // single alphanumeric char
-        assertTrue(Remark.isValidRemark("1")); // single digit
+    public void constructor_singleCharacter_valid() {
+        new Remark("a"); // single alphanumeric char — should not throw
+        new Remark("1"); // single digit — should not throw
     }
 
     @Test
-    public void isValidRemark_leadingSpace_invalid() {
-        // VALIDATION_REGEX = "[\p{Alnum}][\p{Alnum} ]*" — same as Name, must start with alnum
-        assertFalse(Remark.isValidRemark(" cakes")); // starts with space
+    public void constructor_leadingSpace_throwsIllegalArgumentException() {
+        // VALIDATION_REGEX requires first char to be alnum
+        assertThrows(IllegalArgumentException.class, () -> new Remark(" cakes"));
     }
 
     @Test
-    public void isValidRemark_specialCharsAfterValid_invalid() {
-        assertFalse(Remark.isValidRemark("cakes!")); // special char at end
-        assertFalse(Remark.isValidRemark("2-cakes")); // hyphen not allowed
-        assertFalse(Remark.isValidRemark("cake#")); // hash not allowed
+    public void constructor_specialChars_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Remark("cakes!")); // special char at end
+        assertThrows(IllegalArgumentException.class, () -> new Remark("2-cakes")); // hyphen not allowed
+        assertThrows(IllegalArgumentException.class, () -> new Remark("cake#")); // hash not allowed
     }
 
     @Test
