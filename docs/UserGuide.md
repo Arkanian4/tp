@@ -663,7 +663,8 @@ Client2Door saves all data automatically to the hard disk after every command th
 ## FAQ
 
 **Q: How do I transfer my data to another computer?**<br>
-A: Use the [`export`](#exporting-driver-delivery-assignments-export) command to save your data, then transfer the exported file to the other computer and use the `import` command to load it.
+A: Copy the `addressbook.json` file located in the `data/` directory (in the same directory the Client2Door.jar file) over to the other computer in the same directory structure<br>
+**Example**: `Client2Door.jar` in now in the `tp` directory, the `data` directory in the same `tp` directory and `addressbook.json` should be in the `tp/data/` folder.
 
 **Q: What happens if I accidentally run `clear`?**<br>
 A: All data is permanently deleted and cannot be recovered from within the app. Use [`export`](#exporting-driver-delivery-assignments-export) regularly to keep a saved copy of your delivery data.
