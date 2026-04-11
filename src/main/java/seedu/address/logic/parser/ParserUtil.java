@@ -30,6 +30,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_NUM_OF_MONTHS = "Number of months should be an positive integer.";
+    public static final String MESSAGE_DUPLICATE_BOX_NAMES = "Duplicate box names are not allowed.";
 
     private static Clock clock = Clock.systemDefaultZone();
 
@@ -246,8 +247,15 @@ public class ParserUtil {
     public static Set<Box> parseBoxesWithNumOfMonths(Collection<String> boxesWithNumOfMonths) throws ParseException {
         requireNonNull(boxesWithNumOfMonths);
         final Set<Box> boxSet = new TreeSet<>();
+        final Set<String> uniqueBoxNames = new HashSet<>();
         for (String boxWithNumOfMonths: boxesWithNumOfMonths) {
-            boxSet.add(parseBoxWithNumOfMonths(boxWithNumOfMonths));
+            Box parsed = parseBoxWithNumOfMonths(boxWithNumOfMonths);
+
+            // checks if boxes with duplicate names are added, otherwise add the name to a hashset for tracking.
+            if (!uniqueBoxNames.add(parsed.getBoxName())) {
+                throw new ParseException(MESSAGE_DUPLICATE_BOX_NAMES);
+            }
+            boxSet.add(parsed);
         }
         return boxSet;
     }
