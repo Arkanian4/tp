@@ -958,14 +958,14 @@ testers are expected to do more *exploratory* testing.
      cd C:\MyBusiness\Client2Door
      java -jar Client2Door.jar
      ```
-        
+
    **Mac / Linux (Terminal):**
      ```
      cd ~/Client2Door
      java -jar Client2Door.jar
      ```
-   
-   3. Run the app: <br>`java -jar Client2Door.jar`<br>**NOTE:** The window size may not be optimum. 
+
+   3. Run the app: <br>`java -jar Client2Door.jar`<br>**NOTE:** The window size may not be optimum.
 
 2. Saving window preferences
 
@@ -1009,7 +1009,7 @@ testers are expected to do more *exploratory* testing.
 1. Assigning drivers while all persons are being shown
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-   
+
     2. Test case: `assign n/David Lim p/91234567 n/Priya Nair p/98765432`<br>
        Expected: All persons are assigned to one of the provided drivers. Updated driver assignments are reflected in the list. Success message shown in the status message.
 
@@ -1055,12 +1055,12 @@ testers are expected to do more *exploratory* testing.
 ### Saving data
 
 1. Saving the current state of address book
-   1. Running `exit` in the app should automatically save the current state of the address book <br> 
+   1. Running `exit` in the app should automatically save the current state of the address book <br>
    **Note:** The data is saved as `addressbook.json` in the `data` folder that is created in the same folder which the Client2Door.jar file is in
    2. Next time when user re-launches the app, the previously saved state of the address book should be reloaded.
 2. Dealing with corrupted data files
    1. Edit the `addressbook.json` file in the `data` folder (e.g., set expiry date of box to be `null`)
-   2. The app should not be able to start up correctly 
+   2. The app should not be able to start up correctly
    3. User may refer to the example file format [here](#example-format-of-the-data-file) to compare against for potentially corrupt data files (i.e., missing or invalid fields)
    4. Ensure that the formatting of fields and indentations are the same as the given example
    5. Run the app again. The app should be able to run correctly without data loss.

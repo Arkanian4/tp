@@ -201,10 +201,10 @@ A subscriber is a customer who receives regular deliveries from your business. E
 5. At least one Box (subscription package)
 6. An optional remark (e.g. delivery preferences or notes).
 
-> **Note:** 
-> 
+> **Note:**
+>
 >`Name` can only have alphabetic characters, hyphens, apostrophes and spaces. (Excluded slashes to prevent incorrect parsing)
-> 
+>
 > `Address` is validated by finding a 6-digit postal code, with the Singapore context kept in mind!
 
 **Box**
