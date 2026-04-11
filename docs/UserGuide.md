@@ -644,7 +644,7 @@ A: All previous driver assignments for every subscriber are replaced. The `assig
 |--------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | **Add** | `add n/NAME p/PHONE e/EMAIL a/ADDRESS b/BOX_NAME:MONTHS_SUBSCRIBED [r/REMARK] [t/TAG]…` | `add n/Sarah Tan p/91234567 e/sarah@email.com a/Blk 10 AMK Ave 4 b/box-1:2` |
 | **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]…`               | `edit 2 p/98887777 r/prefers afternoon delivery`                            |
-| **Delete** | `delete INDEX`                                                                          | `delete 3` or `delete sarah@email.com`                                      |
+| **Delete** | `delete INDEX`                                                                          | `delete 3`                                     |
 | **Find** | `find KEYWORD [MORE_KEYWORDS]…`                                                         | `find Sarah Wei`                                                            |
 | **List** | `list`                                                                                  | `list`                                                                      |
 | **Mark** | `mark INDEX STATUS`                                                                     | `mark 1 delivered`                                                          |
