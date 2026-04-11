@@ -21,7 +21,7 @@ public class DriverAssignedToPersonPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         try {
             String driverName = person.getAssignedDriver().getName().fullName;
-            return keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(driverName, keyword));
+            return keywords.stream().allMatch(keyword -> StringUtil.containsWordIgnoreCase(driverName, keyword));
         } catch (DriverNotFoundException e) {
             return false;
         }
