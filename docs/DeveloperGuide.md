@@ -451,9 +451,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Startup owner requests to assign drivers to subscribers.
 2.  Startup owner enters the assign command with one or more drivers, each with a name and phone number.
 3.  Client2Door validates the command and driver details.
-4.  Client2Door groups the current subscribers into clusters based on the number of declared drivers.
-5.  Client2Door assigns one driver to each subscriber cluster.
-6.  Client2Door displays a success message and updated subscriber list.
+4.  Client2Door groups the current subscribers into clusters, with each cluster being assigned a driver.
+5.  Client2Door displays a success message and updated subscriber list.
 
     Use case ends.
 
