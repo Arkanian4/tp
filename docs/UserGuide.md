@@ -258,7 +258,7 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS b/BOX_NAME:MONTHS_SUBSCRIBED [r/RE
 | Prefix | Parameter                          | Description                                                                                 |
 |--------|------------------------------------|---------------------------------------------------------------------------------------------|
 | `n/`   | `NAME`                             | Full name of the subscriber                                                                 |
-| `p/`   | `PHONE`                            | Contact number                                                                              |
+| `p/`   | `PHONE`                            | Contact number — digits only, at least 3 digits, must not start with 0                     |
 | `e/`   | `EMAIL`                            | Email address                                                                               |
 | `a/`   | `ADDRESS`                          | Delivery address                                                                            |
 | `b/`   | `BOX_NAME`<br/>`MONTHS_SUBSCRIBED` | Box name and number of months until subscription ends; At least 1 box subscription required |
