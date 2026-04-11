@@ -29,7 +29,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_NUM_OF_MONTHS = "Number of months should be an positive integer.";
+    public static final String MESSAGE_INVALID_NUM_OF_MONTHS = "Months subscribed should be an positive integer.";
     public static final String MESSAGE_DUPLICATE_BOX_NAMES = "Duplicate box names are not allowed.";
 
     private static Clock clock = Clock.systemDefaultZone();
