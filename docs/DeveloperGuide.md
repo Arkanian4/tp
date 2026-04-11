@@ -154,8 +154,6 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Assign drivers feature
 
-#### Implementation Details
-
 The following sequence diagram shows how an assign operation goes through the Logic component:
 
 <puml src="diagrams/AssignCommandSequence.puml" alt="AssignCommandSequence" />
@@ -172,17 +170,29 @@ The `AssignCommand` calls `ClusterAssigner#groupIntoClusters()` to get the parti
 
 ### Delete box feature
 
-#### Implementation Details
-
 The following sequence diagram shows how a `deleteBox` operation goes through the Logic component:
 
 <puml src="diagrams/DeleteBoxCommandSequence.puml" alt="DeleteBoxCommandSequence" />
 
 The following activity diagram summarizes what happens when a user executes a `deletebox` command:
 
-<puml src="diagrams/DeleteBoxActivityDiagram.puml" alt="DeleteBoxActivityDiagram" />
+<puml src="diagrams/DeleteBoxCommandActivity.puml" alt="DeleteBoxCommandActivity" />
 
 A notable behaviour of `DeleteBoxCommand` is that if a subscriber has no remaining boxes after deletion, the subscriber is automatically deleted from the address book as well. Driver assignments are also cleared in this case.
+
+### Filter feature
+
+`FilterCommand` supports two filtering modes: filtering by box name and filtering by assigned driver name. The mode is determined at parse time — if the `d/` prefix is provided, a `DriverAssignedToPersonPredicate` is used; otherwise, a `PersonHasBoxPredicate` is used. Both are case-insensitive.
+
+### Export feature
+
+The `ExportCommand` generates an HTML file containing the current delivery assignments, grouped by driver.
+
+A key constraint is that **all subscribers must have an assigned driver** before export can proceed. If any subscriber is missing a driver, the command fails with an error.
+
+The following activity diagram summarizes what happens when a user executes an `export` command:
+
+<puml src="diagrams/ExportActivityDiagram.puml" alt="ExportActivityDiagram" />
 
 ### \[Proposed\] Undo/redo feature
 
@@ -311,30 +321,28 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | unfamiliar user                                   | see usage instructions       | refer to instructions when I forget how to use Client2Door             |
-| `* * *`  | unfamiliar user                              | access a help page of commands (user guide) | know what each command does and how to use them        |
-| `* * *`  | small business owner                       | add a new customer with contact details, address, and subscription status | manage deliveries and customer communication |
-| `* * *`  | small business owner                       | view current subscribers for the month | plan monthly deliveries efficiently                             |
-| `* * *`  | small business owner                       | search customers by name/phone/address keyword | find  details quickly during calls or delivery attempts    |
-| `* * *`  | small business owner                       | view a customer's delivery address and details | deliver orders accurately                                     |
-| `* * *`  | driver with limited road experience        | open directions (Google Maps link) to my next location | reach the next stop efficiently                    |
-| `* * *`  | small business owner                       | check off customers who have received their monthly box | track completed deliveries for the month              |
-| `* * *`  | small business owner                       | delete customers with expired subscriptions | keep the customer list updated each month                      |
-| `* * *`  | CLI-lover                                  | use keyboard commands as much as possible | reduce time wasted navigating with a mouse                         |
-| `* *`    | new business owner                         | access the app with a password | protect client confidentiality and trust                              |
-| `* *`    | small business owner                       | edit a customer delivery entry    | correct mistakes and handle last-minute changes                  |
-| `* *`    | small business owner                      | add remarks to a delivery (e.g. reason for failed delivery) | avoid repeating the same mistakes |
-| `* *`    | small business owner                       | import and export customers and order details | avoid retyping existing data                                |
-| `* *`    | small business owner                       | group customers staying in the same block/estate/area | complete all deliveries in that area without revisiting |
-| `* *`    | small business owner who prefers commands over a graphical interface | generate a route grouped by location using a single command | minimize repeated trips easily |
-| `* *`    | small business owner                       | highlight blatantly erroneous entries | reduce administrative workload (data checking)                    |
-| `*`      | small business owner                       | hide private customer details | minimize chance of someone else seeing them by accident                |
-| `*`      | long-time user                             | delete specific addresses (subscribers) | keep subscribers viewable while removing non-subscribers        |
-| `*`      | long-time user                             | view a decent-looking UI     | make everyday usage less mundane while keeping information viewable    |
-
-*{More to be added}*
+| Priority | As a …​                                    | I want to …​                                                                   | So that I can…​                                                        |
+|----------|--------------------------------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *`  | unfamiliar user                                   | see usage instructions                                                         | refer to instructions when I forget how to use Client2Door             |
+| `* * *`  | unfamiliar user                              | access a help page of commands (user guide)                                    | know what each command does and how to use them        |
+| `* * *`  | small business owner                       | add a new customer with contact details, address, and subscription information | manage deliveries and customer communication |
+| `* * *`  | small business owner                       | view current subscribers for the month                                         | plan monthly deliveries efficiently                             |
+| `* * *`  | small business owner                       | search customers by name/phone/address keyword                                 | find  details quickly during calls or delivery attempts    |
+| `* * *`  | small business owner                       | view a customer's delivery address and details                                 | deliver orders accurately                                     |
+| `* * *`  | driver with limited road experience        | open directions (Google Maps link) to my next location                         | reach the next stop efficiently                    |
+| `* * *`  | small business owner                       | check off customers who have received their monthly box                        | track completed deliveries for the month              |
+| `* * *`  | small business owner                       | delete customers with expired subscriptions                                    | keep the customer list updated each month                      |
+| `* * *`  | CLI-lover                                  | use keyboard commands as much as possible                                      | reduce time wasted navigating with a mouse                         |
+| `* *`    | new business owner                         | access the app with a password                                                 | protect client confidentiality and trust                              |
+| `* *`    | small business owner                       | edit a customer delivery entry                                                 | correct mistakes and handle last-minute changes                  |
+| `* *`    | small business owner                      | add remarks to a delivery (e.g. reason for failed delivery)                    | avoid repeating the same mistakes |
+| `* *`    | small business owner                       | import and export customers and order details                                  | avoid retyping existing data                                |
+| `* *`    | small business owner                       | group customers staying in the same block/estate/area                          | complete all deliveries in that area without revisiting |
+| `* *`    | small business owner who prefers commands over a graphical interface | generate a route grouped by location using a single command                    | minimize repeated trips easily |
+| `* *`    | small business owner                       | highlight blatantly erroneous entries                                          | reduce administrative workload (data checking)                    |
+| `*`      | small business owner                       | hide private customer details                                                  | minimize chance of someone else seeing them by accident                |
+| `*`      | long-time user                             | delete specific addresses (subscribers)                                        | keep subscribers viewable while removing non-subscribers        |
+| `*`      | long-time user                             | view a decent-looking UI                                                       | make everyday usage less mundane while keeping information viewable    |
 
 ### Use cases
 
@@ -905,7 +913,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Box**: A subscription box associated with a subscriber, containing a box name and expiry date.
+* **Box**: A physical subscription box to be delivered to a subscriber.
 
 * **CLI (Command Line Interface)**: A text-based interface where users interact with the system by typing commands instead of using graphical controls.
 
@@ -917,15 +925,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: A widely used operating system such as Windows, macOS, or Linux.
 
-* **Postal code**: A 6-digit Singapore postal code prefixed with used to identify a subscriber's delivery address.
-
-* **Private contact detail**: Subscriber information that should only be accessible by the owner (e.g., phone numbers or addresses).
+* **Postal code**: A 6-digit Singapore postal code (e.g., `521123`) used to identify a subscriber's delivery address.
 
 * **Startup owner**: The primary user of the system, typically a small business owner managing customer subscriptions and deliveries.
 
 * **Subscriber**: A customer with an active subscription who is expected to receive  recurring deliveries.
 
-* **Subscription status**: The state indicating whether a customer currently has an active subscription.
+* **Subscription information**: Details of a subscriber's box subscription, consisting of a box name and the number of months subscribed.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -993,7 +999,7 @@ testers are expected to do more *exploratory* testing.
        Expected: New subscriber is added to the list. Details of the added subscriber shown in the status message.
 
     3. Test case: `add n/John Doe p/91234567 e/johndoe@email.com a/Blk 123 Tampines St 11 #05-67 Singapore 521123 b/box-1:2`<br>
-       Expected: No subscriber is added as there is an duplicate subscriber. Error details shown in the status message. State of address book remains the same.
+       Expected: No subscriber is added as there is a duplicate subscriber. Error details shown in the status message. State of address book remains the same.
 
     4. Other incorrect add commands to try: `add`, `add n/John Doe`, `add n/John Doe p/91234567 e/invalid-email a/Blk 123 Tampines St 11 #05-67 Singapore 521123 b/box-1:2`, `add n/John Doe p/91234567 e/johndoe@email.com a/No postal code b/box-1:2`<br>
        Expected: Similar to previous.
@@ -1003,7 +1009,7 @@ testers are expected to do more *exploratory* testing.
 1. Assigning drivers while all persons are being shown
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
+   
     2. Test case: `assign n/David Lim p/91234567 n/Priya Nair p/98765432`<br>
        Expected: All persons are assigned to one of the provided drivers. Updated driver assignments are reflected in the list. Success message shown in the status message.
 
@@ -1012,6 +1018,24 @@ testers are expected to do more *exploratory* testing.
 
     4. Possible incorrect assign commands to try: `assign`, `assign n/David Lim`, `assign p/91234567`, `assign n/David Lim p/000`, `assign n/ p/91234567`<br>
        Expected: No driver assignments are made. Error details shown in the status message. State of address book remains the same.
+
+### Deleting boxes from a subscriber
+
+1. Deleting a box from a subscriber with multiple boxes
+
+    1. Prerequisites: A subscriber named `Alex Yeoh` exists with at least two boxes.
+
+    2. Test case: `deletebox n/Alex Yeoh b/box-1`<br>
+       Expected: `box-1` removed from Alex Yeoh. Success message shown.
+
+    3. Test case: `deletebox n/Alex Yeoh b/box-1 b/box-2`<br>
+       Expected: Both boxes removed. If no boxes remain, Alex Yeoh is automatically deleted. Success message indicates subscriber was also deleted.
+
+    4. Test case: `deletebox n/Alex Yeoh b/nosuchbox-1`<br>
+       Expected: No change. Box does not exist error shown.
+
+    5. Test case: `deletebox n/Unknown Person b/box-1`<br>
+       Expected: No change. Subscriber not found error shown.
 
 ### Exporting delivery assignments
 
