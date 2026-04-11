@@ -46,7 +46,7 @@ public class DriverAssignedToPersonPredicateTest {
                 new DriverAssignedToPersonPredicate(Collections.singletonList("Alex"));
         assertTrue(predicate.test(assignedPerson));
 
-        predicate = new DriverAssignedToPersonPredicate(Arrays.asList("Alex", "Jordan"));
+        predicate = new DriverAssignedToPersonPredicate(Arrays.asList("Alex", "Tan"));
         assertTrue(predicate.test(assignedPerson));
 
         predicate = new DriverAssignedToPersonPredicate(Collections.singletonList("aLeX"));

@@ -435,7 +435,7 @@ Before filtering by driver:
 
 ![Filter before (driver)](../docs/images/Release1.4-FilterBeforeDriver.png)
 
-After running `filter d/David Lim`, only that driver's subscribers are shown:
+After running `filter d/David`, only that driver's subscribers are shown:
 
 ![Filter after (driver)](../docs/images/Release1.4-FilterAfterDriver.png)
 
