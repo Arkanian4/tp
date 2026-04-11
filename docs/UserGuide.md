@@ -447,7 +447,7 @@ Adds one or more boxes to an existing subscriber.
 
 Format: `addbox n/NAME b/BOX_NAME:MONTHS_SUBSCRIBED [b/MORE_BOX_NAME:MONTHS_SUBSCRIBED]…`
 
-* The subscriber is identified by their exact `NAME`.
+* The subscriber is identified by their exact `NAME` from the currently displayed list. Run `list` first if the subscriber is not visible.
 * See also: [`add`](#adding-a-subscriber-add) to add boxes when first creating a subscriber.
 
 > **Tip:** Use this command when a subscriber renews or upgrades their order mid-cycle without changing their other details.
@@ -468,7 +468,7 @@ Edits the name or expiry date of an existing box belonging to a subscriber.
 
 Format: `editbox n/NAME b/OLD_BOX_NAME [nb/NEW_BOX_NAME] [ex/MONTHS_SUBSCRIBED]`
 
-* The subscriber is identified by their exact full `NAME`.
+* The subscriber is identified by their exact full `NAME` from the currently displayed list. Run `list` first if the subscriber is not visible.
 * `b/OLD_BOX_NAME` identifies which box to edit.
 * At least one of `nb/` or `ex/` must be provided.
 * See also: [`addbox`](#adding-one-or-more-boxes-to-a-subscriber-addbox) to add new boxes, [`deletebox`](#deleting-boxes-deletebox) to remove boxes.
@@ -491,7 +491,7 @@ Removes one or more boxes from a subscriber.
 
 Format: `deletebox n/NAME b/BOX_NAME [b/BOX_NAME]…`
 
-* The subscriber is identified by their exact `NAME`.
+* The subscriber is identified by their exact `NAME` from the currently displayed list. Run `list` first if the subscriber is not visible.
 * At least one box must be specified.
 * See also: [`addbox`](#adding-one-or-more-boxes-to-a-subscriber-addbox) to add boxes.
 
