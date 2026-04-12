@@ -599,7 +599,8 @@ Format: `import FILE_NAME.csv`
 * Tags cannot be imported from the CSV file.
 
 > **Warning:** The imported CSV file must be generated using this [google form template](https://forms.gle/5ViAVCQkdpJJt7Y89)
-> **Warning:** Running `import` clears all existing driver assignments. Re-run [`assign`](#assigning-drivers-assign) after importing if driver assignments are needed.
+
+> **Tip:** Running `import` clears all existing driver assignments. Re-run [`assign`](#assigning-drivers-assign) after importing if driver assignments are needed.
 
 **CSV format:**
 
