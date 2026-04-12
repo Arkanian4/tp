@@ -212,7 +212,7 @@ A box represents a single recurring delivery package assigned to a subscriber. E
 
 > **Note:**
 > 
-> Client2Door disallows adding boxes that expire in the same month they were added. This is because deliveries only start the month following the boxes' subscription at the earliest.
+> Orders are fulfilled starting the following month of a box's addition. Therefore, a one-month subscription made in the current month will be delivered the following month and expire at the end of the month.
 
 **Delivery Status**:
 Every subscriber has a delivery status that reflects where their order is in the fulfilment process:
