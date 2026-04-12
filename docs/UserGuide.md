@@ -192,7 +192,7 @@ Tom Baker is removed. The output panel confirms the deletion. You are now ready 
 
 Before using Client2Door, it helps to understand three core ideas:
 
-**Subscriber**
+**Subscriber**:
 A subscriber is a customer who receives regular deliveries from your business. Each subscriber has:
 1. A Name
 2. Phone number
@@ -207,10 +207,14 @@ A subscriber is a customer who receives regular deliveries from your business. E
 > 
 > `Address` is validated by finding a 6-digit postal code, with the Singapore context kept in mind!
 
-**Box**
-A box represents a single recurring delivery package assigned to a subscriber. Each subscriber must have at least one box. Boxes have a name in the format `[type]-[number]` where the type uses underscores for multi-word names (e.g. `box-1`, `pastry-2`, `meal_kit-1`) and an expiry date — after which the subscription is considered lapsed. A subscriber can hold multiple boxes if they have ordered more than one package.
+**Box**:
+A box represents a single recurring delivery package assigned to a subscriber. Each subscriber must have at least one box. Boxes have a name in the format `[type]-[number]` where the type uses underscores for multi-word names (e.g. `box-1`, `pastry-2`, `meal_kit-1`) and an **expiry date** — after which the subscription is considered lapsed. A subscriber can hold multiple boxes if they have ordered more than one package.
 
-**Delivery Status**
+> **Note:**
+> 
+> Orders are fulfilled starting the following month of a box's addition. Therefore, a one-month subscription made in the current month will be delivered the following month and expire at the end of the month.
+
+**Delivery Status**:
 Every subscriber has a delivery status that reflects where their order is in the fulfilment process:
 - `Pending` — order received, not yet packed
 - `Packed` — box is packed and ready for dispatch
@@ -239,6 +243,19 @@ Every subscriber has a delivery status that reflects where their order is in the
 >
 > * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
+### **Parameter reference:**
+
+| Prefix | Parameter  | Description                                                                                 |
+|--------|------------|---------------------------------------------------------------------------------------------|
+| `n/`   | `NAME`     | Full name of the subscriber                                                                 |
+| `p/`   | `PHONE`    | Contact number — digits only, at least 3 digits, must not start with 0                      |
+| `e/`   | `EMAIL`    | Email address                                                                               |
+| `a/`   | `ADDRESS`  | Delivery address                                                                            |
+| `b/`   | `BOX_NAME`<br/>`MONTHS_SUBSCRIBED` | Box name and number of months until subscription ends; At least 1 box subscription required |
+| `nb/`  | `BOX_NAME` | New box name — only used in the `editbox` command                                           |
+| `r/`   | `REMARK`   | Optional delivery note — defaults to `No remark` if omitted                                 |
+| `t/`   | `TAG`      | Optional tag(s) — can be repeated                                                           |
+
 ---
 
 ### Viewing help : `help`
@@ -258,18 +275,6 @@ Format: `help`
 Adds a new subscriber to Client2Door.
 
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS b/BOX_NAME:MONTHS_SUBSCRIBED [r/REMARK] [t/TAG]…`
-
-**Parameter reference:**
-
-| Prefix | Parameter                          | Description                                                                                 |
-|--------|------------------------------------|---------------------------------------------------------------------------------------------|
-| `n/`   | `NAME`                             | Full name of the subscriber                                                                 |
-| `p/`   | `PHONE`                            | Contact number — digits only, at least 3 digits, must not start with 0                     |
-| `e/`   | `EMAIL`                            | Email address                                                                               |
-| `a/`   | `ADDRESS`                          | Delivery address                                                                            |
-| `b/`   | `BOX_NAME`<br/>`MONTHS_SUBSCRIBED` | Box name and number of months until subscription ends; At least 1 box subscription required |
-| `r/`   | `REMARK`                           | Optional delivery note — defaults to `No remark` if omitted                                 |
-| `t/`   | `TAG`                              | Optional tag(s) — can be repeated                                                           |
 
 > **Tip:** Add multiple boxes in one command by repeating `b/`. You can always add more boxes later with [`addbox`](#adding-one-or-more-boxes-to-a-subscriber-addbox).
 
@@ -512,6 +517,7 @@ Format: `deletebox n/NAME b/BOX_NAME [b/BOX_NAME]…`
 
 * The subscriber is identified by their exact `NAME` from the currently displayed list. Run `list` first if the subscriber is not visible.
 * At least one box must be specified.
+* If there are multiple boxes with the same name specified, only one will be detected. Refer to the example below.
 * See also: [`addbox`](#adding-one-or-more-boxes-to-a-subscriber-addbox) to add boxes.
 
 > **Warning:** If you delete all boxes belonging to a subscriber, the subscriber will also be permanently deleted from Client2Door.
@@ -519,6 +525,7 @@ Format: `deletebox n/NAME b/BOX_NAME [b/BOX_NAME]…`
 Examples:
 * `deletebox n/Sarah Tan b/box-1` — removes one box from Sarah Tan.
 * `deletebox n/Wei Ming b/box-1 b/box-2` — removes two boxes. If these are Wei Ming's only boxes, Wei Ming will also be deleted.
+* `deletebox n/Wei Ming b/box-1 b/box-1` — removes only one box, box-1. The second `box-1` will be ignored.
 
 **Expected output:** The output panel confirms which boxes were removed. The subscriber list resets to show all subscribers.
 

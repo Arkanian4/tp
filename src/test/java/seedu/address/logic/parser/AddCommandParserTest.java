@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BOX_DESC_BOX1;
 import static seedu.address.logic.commands.CommandTestUtil.BOX_DESC_BOX2;
+import static seedu.address.logic.commands.CommandTestUtil.BOX_NAME_DESC_BOX1;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -114,6 +115,11 @@ public class AddCommandParserTest {
                         + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_PHONE,
                         PREFIX_REMARKS));
+
+        // multiple boxes with same name
+        assertParseFailure(parser,
+                validExpectedPersonString + BOX_NAME_DESC_BOX1 + ":5",
+                ParserUtil.MESSAGE_DUPLICATE_BOX_NAMES);
 
         // invalid value followed by valid value
 
