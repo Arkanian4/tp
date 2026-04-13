@@ -11,12 +11,6 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Acknowledgements**
-
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
-
---------------------------------------------------------------------------------------------------------------------
-
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
@@ -57,7 +51,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class which follows the corresponding API `interface` mentioned in the previous point.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -145,8 +139,9 @@ The `Model` component,
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `AddressBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* serializes driver data as part of each person's JSON representation, using `JsonAdaptedDriver` to convert between the `Driver` model object and its JSON form.
 
 ### Common classes
 
@@ -158,11 +153,9 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Assign Drivers feature
+### Assign drivers feature
 
-#### Implementation Details
-
-The following sequence diagram shows how an undo operation goes through the Logic component:
+The following sequence diagram shows how an assign operation goes through the Logic component:
 
 <puml src="diagrams/AssignCommandSequence.puml" alt="AssignCommandSequence" />
 
@@ -170,7 +163,37 @@ Separate sequence diagram showing how the assignment of all subscribers:
 
 <puml src="diagrams/AssignLoopSequence.puml" alt="AssignLoopSequence" />
 
-The `AssignCommand` calls `ClusterUtil#groupIntoClusters()` to get the partitioned list of lists of `Person`s. It will then call `Model#setPerson()` to edit all the `Person`s in the address book.
+The following class diagram shows the structure of the clustering logic:
+
+<puml src="diagrams/AssignClassDiagram.puml" alt="AssignClassDiagram" />
+
+The `AssignCommand` calls `ClusterAssigner#groupIntoClusters()` to get the partitioned list of lists of `Person`s. It will then call `Model#setPerson()` to edit all the `Person`s in the address book. The clustering logic uses `GeographicalComparator`, `DistrictMapper` and `DistrictRanker` to sort subscribers geographically from west to east before partitioning.
+
+### Delete box feature
+
+The following sequence diagram shows how a `deleteBox` operation goes through the Logic component:
+
+<puml src="diagrams/DeleteBoxCommandSequence.puml" alt="DeleteBoxCommandSequence" />
+
+The following activity diagram summarizes what happens when a user executes a `deletebox` command:
+
+<puml src="diagrams/DeleteBoxCommandActivity.puml" alt="DeleteBoxCommandActivity" />
+
+A notable behaviour of `DeleteBoxCommand` is that if a subscriber has no remaining boxes after deletion, the subscriber is automatically deleted from the address book as well. Driver assignments are also cleared in this case.
+
+### Filter feature
+
+`FilterCommand` supports two filtering modes: filtering by box name and filtering by assigned driver name. The mode is determined at parse time — if the `d/` prefix is provided, a `DriverAssignedToPersonPredicate` is used; otherwise, a `PersonHasBoxPredicate` is used. Both are case-insensitive.
+
+### Export feature
+
+The `ExportCommand` generates an HTML file containing the current delivery assignments, grouped by driver.
+
+A key constraint is that **all subscribers must have an assigned driver** before export can proceed. If any subscriber is missing a driver, the command fails with an error.
+
+The following activity diagram summarizes what happens when a user executes an `export` command:
+
+<puml src="diagrams/ExportActivityDiagram.puml" alt="ExportActivityDiagram" />
 
 ### \[Proposed\] Undo/redo feature
 
@@ -263,13 +286,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -291,7 +307,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * small delivery startup owners (e.g., subscription box services) in Singapore
 * have limited manpower for admin work
 * have limited road experience and are unfamiliar with local addresses
-* can type fast and prefer typing over mouse interactions
+* can type fast and prefer typing to mouse interactions
 * are comfortable using CLI apps
 
 **Value proposition** (Client2Door):
@@ -306,30 +322,28 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | unfamiliar user                                   | see usage instructions       | refer to instructions when I forget how to use Client2Door             |
-| `* * *`  | unfamiliar user                              | access a help page of commands (user guide) | know what each command does and how to use them        |
-| `* * *`  | small business owner                       | add a new customer with contact details, address, and subscription status | manage deliveries and customer communication |
-| `* * *`  | small business owner                       | view current subscribers for the month | plan monthly deliveries efficiently                             |
-| `* * *`  | small business owner                       | search customers by name/phone/address keyword | find  details quickly during calls or delivery attempts    |
-| `* * *`  | small business owner                       | view a customer's delivery address and details | deliver orders accurately                                     |
-| `* * *`  | driver with limited road experience        | open directions (Google Maps link) to my next location | reach the next stop efficiently                    |
-| `* * *`  | small business owner                       | check off customers who have received their monthly box | track completed deliveries for the month              |
-| `* * *`  | small business owner                       | delete customers with expired subscriptions | keep the customer list updated each month                      |
-| `* * *`  | CLI-lover                                  | use keyboard commands as much as possible | reduce time wasted navigating with a mouse                         |
-| `* *`    | new business owner                         | access the app with a password | protect client confidentiality and trust                              |
-| `* *`    | small business owner                       | edit a customer delivery entry    | correct mistakes and handle last-minute changes                  |
-| `* *`    | small business owner                      | add remarks to a delivery (e.g. reason for failed delivery) | avoid repeating the same mistakes |
-| `* *`    | small business owner                       | import and export customers and order details | avoid retyping existing data                                |
-| `* *`    | small business owner                       | group customers staying in the same block/estate/area | complete all deliveries in that area without revisiting |
-| `* *`    | small business owner who prefers commands over a graphical interface | generate a route grouped by location using a single command | minimize repeated trips easily |
-| `* *`    | small business owner                       | highlight blatantly erroneous entries | reduce administrative workload (data checking)                    |
-| `*`      | small business owner                       | hide private customer details | minimize chance of someone else seeing them by accident                |
-| `*`      | long-time user                             | delete specific addresses (subscribers) | keep subscribers viewable while removing non-subscribers        |
-| `*`      | long-time user                             | view a decent-looking UI     | make everyday usage less mundane while keeping information viewable    |
-
-*{More to be added}*
+| Priority | As a …​                                    | I want to …​                                                                   | So that I can…​                                                        |
+|----------|--------------------------------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| `* * *`  | unfamiliar user                                   | see usage instructions                                                         | refer to instructions when I forget how to use Client2Door             |
+| `* * *`  | unfamiliar user                              | access a help page of commands (user guide)                                    | know what each command does and how to use them        |
+| `* * *`  | small business owner                       | add a new customer with contact details, address, and subscription information | manage deliveries and customer communication |
+| `* * *`  | small business owner                       | view current subscribers for the month                                         | plan monthly deliveries efficiently                             |
+| `* * *`  | small business owner                       | search customers by name/phone/address keyword                                 | find  details quickly during calls or delivery attempts    |
+| `* * *`  | small business owner                       | view a customer's delivery address and details                                 | deliver orders accurately                                     |
+| `* * *`  | driver with limited road experience        | open directions (Google Maps link) to my next location                         | reach the next stop efficiently                    |
+| `* * *`  | small business owner                       | check off customers who have received their monthly box                        | track completed deliveries for the month              |
+| `* * *`  | small business owner                       | delete customers with expired subscriptions                                    | keep the customer list updated each month                      |
+| `* * *`  | CLI-lover                                  | use keyboard commands as much as possible                                      | reduce time wasted navigating with a mouse                         |
+| `* *`    | new business owner                         | access the app with a password                                                 | protect client confidentiality and trust                              |
+| `* *`    | small business owner                       | edit a customer delivery entry                                                 | correct mistakes and handle last-minute changes                  |
+| `* *`    | small business owner                      | add remarks to a delivery (e.g. reason for failed delivery)                    | avoid repeating the same mistakes |
+| `* *`    | small business owner                       | import and export customers and order details                                  | avoid retyping existing data                                |
+| `* *`    | small business owner                       | group customers staying in the same block/estate/area                          | complete all deliveries in that area without revisiting |
+| `* *`    | small business owner who prefers commands over a graphical interface | generate a route grouped by location using a single command                    | minimize repeated trips easily |
+| `* *`    | small business owner                       | highlight blatantly erroneous entries                                          | reduce administrative workload (data checking)                    |
+| `*`      | small business owner                       | hide private customer details                                                  | minimize chance of someone else seeing them by accident                |
+| `*`      | long-time user                             | delete specific addresses (subscribers)                                        | keep subscribers viewable while removing non-subscribers        |
+| `*`      | long-time user                             | view a decent-looking UI                                                       | make everyday usage less mundane while keeping information viewable    |
 
 ### Use cases
 
@@ -900,21 +914,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
+* **Box**: A physical subscription box to be delivered to a subscriber.
+
 * **CLI (Command Line Interface)**: A text-based interface where users interact with the system by typing commands instead of using graphical controls.
 
-* **Subscriber**: A customer with an active subscription who is expected to receive  recurring deliveries.
+* **Cluster**: A group of subscribers geographically grouped together and assigned to a single driver for efficient delivery.
 
-* **Subscription status**: The state indicating whether a customer currently has an active subscription.
+* **Delivery status**: The current state of a subscriber's delivery, which can be `PENDING`, `PACKED`, or `DELIVERED`.
 
-* **Delivery status**: The outcome of a delivery attempt (e.g., succeeded or failed).
-
-* **Startup owner**: The primary user of the system, typically a small business owner managing customer subscriptions and deliveries.
-
-* **Delivery driver**: A user responsible for carrying out deliveries using the information stored in the system.
+* **Driver**: A delivery driver assigned to a cluster of subscribers for a delivery session.
 
 * **Mainstream OS**: A widely used operating system such as Windows, macOS, or Linux.
 
-* **Private contact detail**: Subscriber information that should only be accessible by the owner (e.g., phone numbers or addresses).
+* **Postal code**: A 6-digit Singapore postal code (e.g., `521123`) used to identify a subscriber's delivery address.
+
+* **Startup owner**: The primary user of the system, typically a small business owner managing customer subscriptions and deliveries.
+
+* **Subscriber**: A customer with an active subscription who is expected to receive  recurring deliveries.
+
+* **Subscription information**: Details of a subscriber's box subscription, consisting of a box name and the number of months subscribed.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -941,14 +959,14 @@ testers are expected to do more *exploratory* testing.
      cd C:\MyBusiness\Client2Door
      java -jar Client2Door.jar
      ```
-        
+
    **Mac / Linux (Terminal):**
      ```
      cd ~/Client2Door
      java -jar Client2Door.jar
      ```
-   
-   3. Run the app: <br>`java -jar Client2Door.jar`<br>**NOTE:** The window size may not be optimum. 
+
+   3. Run the app: <br>`java -jar Client2Door.jar`<br>**NOTE:** The window size may not be optimum.
 
 2. Saving window preferences
 
@@ -982,7 +1000,7 @@ testers are expected to do more *exploratory* testing.
        Expected: New subscriber is added to the list. Details of the added subscriber shown in the status message.
 
     3. Test case: `add n/John Doe p/91234567 e/johndoe@email.com a/Blk 123 Tampines St 11 #05-67 Singapore 521123 b/box-1:2`<br>
-       Expected: No subscriber is added as there is an duplicate subscriber. Error details shown in the status message. State of address book remains the same.
+       Expected: No subscriber is added as there is a duplicate subscriber. Error details shown in the status message. State of address book remains the same.
 
     4. Other incorrect add commands to try: `add`, `add n/John Doe`, `add n/John Doe p/91234567 e/invalid-email a/Blk 123 Tampines St 11 #05-67 Singapore 521123 b/box-1:2`, `add n/John Doe p/91234567 e/johndoe@email.com a/No postal code b/box-1:2`<br>
        Expected: Similar to previous.
@@ -1002,6 +1020,24 @@ testers are expected to do more *exploratory* testing.
     4. Possible incorrect assign commands to try: `assign`, `assign n/David Lim`, `assign p/91234567`, `assign n/David Lim p/000`, `assign n/ p/91234567`<br>
        Expected: No driver assignments are made. Error details shown in the status message. State of address book remains the same.
 
+### Deleting boxes from a subscriber
+
+1. Deleting a box from a subscriber with multiple boxes
+
+    1. Prerequisites: A subscriber named `Alex Yeoh` exists with at least two boxes.
+
+    2. Test case: `deletebox n/Alex Yeoh b/box-1`<br>
+       Expected: `box-1` removed from Alex Yeoh. Success message shown.
+
+    3. Test case: `deletebox n/Alex Yeoh b/box-1 b/box-2`<br>
+       Expected: Both boxes removed. If no boxes remain, Alex Yeoh is automatically deleted. Success message indicates subscriber was also deleted.
+
+    4. Test case: `deletebox n/Alex Yeoh b/nosuchbox-1`<br>
+       Expected: No change. Box does not exist error shown.
+
+    5. Test case: `deletebox n/Unknown Person b/box-1`<br>
+       Expected: No change. Subscriber not found error shown.
+
 ### Exporting delivery assignments
 
 1. Exporting delivery assignments after drivers have been assigned
@@ -1020,12 +1056,12 @@ testers are expected to do more *exploratory* testing.
 ### Saving data
 
 1. Saving the current state of address book
-   1. Running `exit` in the app should automatically save the current state of the address book <br> 
+   1. Running `exit` in the app should automatically save the current state of the address book <br>
    **Note:** The data is saved as `addressbook.json` in the `data` folder that is created in the same folder which the Client2Door.jar file is in
    2. Next time when user re-launches the app, the previously saved state of the address book should be reloaded.
 2. Dealing with corrupted data files
    1. Edit the `addressbook.json` file in the `data` folder (e.g., set expiry date of box to be `null`)
-   2. The app should not be able to start up correctly 
+   2. The app should not be able to start up correctly
    3. User may refer to the example file format [here](#example-format-of-the-data-file) to compare against for potentially corrupt data files (i.e., missing or invalid fields)
    4. Ensure that the formatting of fields and indentations are the same as the given example
    5. Run the app again. The app should be able to run correctly without data loss.
